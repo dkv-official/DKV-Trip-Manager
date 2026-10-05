@@ -35,7 +35,7 @@
             </div>
 
             <!-- Tabs -->
-            <div class="flex border-b border-gray-700 mb-6">
+            <div id="authTabs" class="flex border-b border-gray-700 mb-6">
                 <button id="tabCreateBtn" onclick="switchAuthTab('create')" class="w-1/2 pb-2 font-semibold text-cyan-400 border-b-2 border-cyan-400 text-sm transition">அட்மின் (Create)</button>
                 <button id="tabJoinBtn" onclick="switchAuthTab('join')" class="w-1/2 pb-2 font-semibold text-gray-400 text-sm transition">நண்பர்கள் (Join)</button>
             </div>
@@ -58,12 +58,7 @@
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">மொத்த பட்ஜெட் (₹)</label>
-                    <input type="number" id="adminTripBudget" required placeholder="5000" 
-                        class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-400 mb-1">ஒவ்வொருவரும் கொடுக்க வேண்டிய பங்கு (₹ Per Person Share)</label>
+                    <label class="block text-sm text-gray-400 mb-1">ஒரு நபருக்கான பங்குத் தொகை (₹ Per Person Share)</label>
                     <input type="number" id="adminPerPersonShare" required placeholder="1000" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
@@ -115,15 +110,18 @@
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg">
-                    ரூமுக்கு உள்நுழை
+                    ரூமுக்கு நுழைவு கோரு (Request Join)
                 </button>
             </form>
+
+            <!-- Inline Success / Status Banner -->
+            <div id="joinStatusBanner" class="mt-4 p-4 rounded-xl border hidden text-xs leading-relaxed space-y-2"></div>
         </div>
 
         <!-- Recent Trips -->
         <div id="recentTripsContainer" class="max-w-md w-full bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 hidden">
             <h3 class="text-md font-semibold text-cyan-400 mb-3 flex items-center gap-2">
-                📂 உங்களது சமீபத்திய ட்ரிப்கள் (Your Recent Trips)
+                📂 உங்களது ட்ரிப்கள் (Your Joined / Recent Trips)
             </h3>
             <div id="recentTripsList" class="space-y-3"></div>
         </div>
@@ -133,17 +131,16 @@
     <!-- VIEW 2: DASHBOARD PAGE -->
     <main id="dashboardView" class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6 hidden flex-grow">
 
-        <!-- Left Column: Admin Payment Input, Add Expense & Members List -->
+        <!-- Left Column -->
         <div class="md:col-span-1 space-y-6">
             
-            <!-- Admin Contribution Input Card (Visible only to Admin) -->
+            <!-- Admin Contribution Input Card -->
             <div id="adminPaymentCard" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700 hidden">
                 <h2 class="text-md font-semibold text-cyan-400 mb-3">💵 மெம்பர் பங்குத் தொகை பெற (Admin)</h2>
                 <form id="adminPaymentForm" class="space-y-3">
                     <div>
                         <label class="block text-xs text-gray-400 mb-1">உறுப்பினர் பெயர் (Member)</label>
                         <select id="paymentMemberSelect" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
-                            <!-- Populated dynamically -->
                         </select>
                     </div>
                     <div>
@@ -155,6 +152,17 @@
                         பணம் பெற்றதை சேமி
                     </button>
                 </form>
+            </div>
+
+            <!-- Admin Pending Requests Card -->
+            <div id="adminRequestsCard" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700 hidden">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-md font-semibold text-amber-400">🔔 ஜாயின் கோரிக்கைகள்</h3>
+                    <button onclick="renderPendingRequests()" class="text-xs bg-gray-700 hover:bg-gray-600 text-cyan-300 px-2 py-1 rounded transition">🔄 Refresh</button>
+                </div>
+                <div id="pendingRequestsContainer" class="space-y-2 text-xs">
+                    <p class="text-gray-400">புதிய கோரிக்கைகள் எதுவும் இல்லை.</p>
+                </div>
             </div>
 
             <!-- Add Expense Card -->
@@ -184,16 +192,24 @@
 
             <!-- Members List & Contribution Tracker -->
             <div class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700">
-                <h3 class="text-md font-semibold text-cyan-400 mb-3">👥 உறுப்பினர்கள் & பங்களிப்பு (Contributions)</h3>
+                <h3 class="text-md font-semibold text-cyan-400 mb-3">👥 உறுப்பினர்கள் & பங்களிப்பு</h3>
                 <div class="text-xs text-gray-400 mb-3">பங்குத் தொகை: <span id="displayShareAmount" class="text-cyan-300 font-bold">₹0</span> / நபர்</div>
                 <ul id="membersListContainer" class="space-y-3 text-sm text-gray-300">
-                    <!-- Dynamic Members & Paid/Pending status -->
                 </ul>
             </div>
         </div>
 
-        <!-- Right Column: Trip Summary & Expenses Table -->
+        <!-- Right Column -->
         <div class="md:col-span-2 space-y-6">
+
+            <!-- Budget Warning Banner -->
+            <div id="budgetWarningBanner" class="bg-rose-900 border border-rose-700 text-rose-200 px-4 py-3 rounded-2xl shadow-lg hidden flex items-center gap-3 animate-pulse">
+                <span class="text-2xl">⚠️</span>
+                <div>
+                    <h4 class="font-bold text-sm">எச்சரிக்கை: பட்ஜெட் எல்லை மீறிவிட்டது!</h4>
+                    <p class="text-xs text-rose-300">மொத்த செலவு நிர்ணயிக்கப்பட்ட பட்ஜெட்டைத் தாண்டிவிட்டது.</p>
+                </div>
+            </div>
 
             <!-- Trip Summary Card -->
             <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
@@ -215,22 +231,35 @@
 
                 <!-- Stats Grid -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                    <div class="bg-gray-700 p-4 rounded-xl border border-gray-600">
-                        <p class="text-xs text-gray-400">நபர்கள் (Joined / Max)</p>
-                        <p id="statMembers" class="text-xl font-bold text-amber-400 mt-1">0 / 0</p>
+                    <div class="bg-gray-700 p-4 rounded-xl border border-gray-600 flex justify-between items-start">
+                        <div>
+                            <p class="text-xs text-gray-400">நபர்கள் (Joined / Max)</p>
+                            <p id="statMembers" class="text-xl font-bold text-amber-400 mt-1">0 / 0</p>
+                        </div>
+                        <button id="editMembersBtn" onclick="openEditMembersModal()" class="hidden bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-2 py-1 rounded font-medium transition">✏️ Edit</button>
                     </div>
-                    <div class="bg-gray-700 p-4 rounded-xl border border-gray-600">
-                        <p class="text-xs text-gray-400">மொத்த பட்ஜெட்</p>
-                        <p id="statBudget" class="text-xl font-bold text-cyan-400 mt-1">₹0</p>
+                    <div class="bg-gray-700 p-4 rounded-xl border border-gray-600 flex justify-between items-start">
+                        <div>
+                            <p class="text-xs text-gray-400">மொத்த பட்ஜெட் (Auto)</p>
+                            <p id="statBudget" class="text-xl font-bold text-cyan-400 mt-1">₹0</p>
+                        </div>
+                        <button id="editBudgetBtn" onclick="openEditBudgetModal()" class="hidden bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-2 py-1 rounded font-medium transition">✏️ Edit Share</button>
                     </div>
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600">
                         <p class="text-xs text-gray-400">மொத்த செலவு</p>
                         <p id="statSpent" class="text-xl font-bold text-rose-400 mt-1">₹0</p>
                     </div>
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600">
-                        <p class="text-xs text-gray-400">மீதி தொகை</p>
+                        <p id="statBalanceLabel" class="text-xs text-gray-400">மீதி தொகை</p>
                         <p id="statBalance" class="text-xl font-bold text-emerald-400 mt-1">₹0</p>
                     </div>
+                </div>
+
+                <!-- Admin Trip End / Settlement Button -->
+                <div id="adminTripEndSection" class="mt-6 pt-4 border-t border-gray-700 hidden">
+                    <button onclick="triggerTripSettlement()" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2">
+                        🏁 ட்ரிப் முடிவு & செட்டில்மென்ட் (Trip End & Split-up)
+                    </button>
                 </div>
             </div>
 
@@ -260,7 +289,39 @@
 
     </main>
 
-    <!-- QR Code Modal -->
+    <!-- Modals -->
+    <div id="editBudgetModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50 px-4">
+        <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-lg font-semibold text-cyan-400">✏️ நபர் பங்களிப்பை மாற்றுக (Edit Per-Person Share)</h3>
+            <form id="editBudgetForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">ஒரு நபருக்கான பங்குத் தொகை (₹ Per Person)</label>
+                    <input type="number" id="newShareInput" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition">சேமி</button>
+                    <button type="button" onclick="toggleEditBudgetModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition">ரத்து</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="editMembersModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50 px-4">
+        <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-lg font-semibold text-cyan-400">✏️ நபர்கள் லிமிட்டை மாற்றுக</h3>
+            <form id="editMembersForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">புதிய மொத்த நபர்கள் லிமிட்</label>
+                    <input type="number" id="newMaxMembersInput" required min="1" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition">சேமி</button>
+                    <button type="button" onclick="toggleEditMembersModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition">ரத்து</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50 px-4">
         <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-sm w-full text-center space-y-4 shadow-2xl">
             <h3 class="text-lg font-semibold text-cyan-400" id="modalTitle">💳 Admin UPI QR Code</h3>
@@ -273,11 +334,23 @@
         </div>
     </div>
 
+    <div id="settlementModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex justify-center items-center z-50 px-4">
+        <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-2xl w-full text-center space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <h3 class="text-xl font-bold text-cyan-400">🏁 ட்ரிப் பைனல் செட்டில்மென்ட் அறிக்கை</h3>
+            <p class="text-xs text-gray-400">ஒவ்வொரு நபரின் பங்களிப்பு மற்றும் இறுதி கணக்கு விவரம்:</p>
+            <div id="settlementContent" class="space-y-3 text-left"></div>
+            <button onclick="toggleSettlementModal()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 rounded-lg transition">
+                மூடு (Close)
+            </button>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script>
         let tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
         let currentTrip = null;
         let currentUser = { name: "", isAdmin: false };
+        let adminRefreshInterval = null;
 
         window.onload = function() {
             renderRecentTrips();
@@ -288,6 +361,9 @@
             const joinForm = document.getElementById('joinTripForm');
             const createBtn = document.getElementById('tabCreateBtn');
             const joinBtn = document.getElementById('tabJoinBtn');
+            const statusBanner = document.getElementById('joinStatusBanner');
+
+            statusBanner.classList.add('hidden');
 
             if (tab === 'create') {
                 createForm.classList.remove('hidden');
@@ -309,19 +385,26 @@
             const random6Digit = Math.floor(100000 + Math.random() * 900000).toString();
             const adminNameInput = document.getElementById('adminName').value.trim();
             const adminPhoneInput = document.getElementById('adminPhone').value.trim();
+            const perPersonShare = parseFloat(document.getElementById('adminPerPersonShare').value);
+            const maxMembers = parseInt(document.getElementById('adminMaxMembers').value);
             
+            const initialMembers = [{ name: adminNameInput, phone: adminPhoneInput, role: "Admin", paid: 0 }];
+            const calculatedBudget = initialMembers.length * perPersonShare;
+
             const newTrip = {
                 roomId: random6Digit,
                 password: document.getElementById('adminPassword').value,
                 adminName: adminNameInput,
                 adminPhone: adminPhoneInput,
                 name: document.getElementById('adminTripName').value,
-                budget: parseFloat(document.getElementById('adminTripBudget').value),
-                perPersonShare: parseFloat(document.getElementById('adminPerPersonShare').value),
-                maxMembers: parseInt(document.getElementById('adminMaxMembers').value),
+                perPersonShare: perPersonShare,
+                budget: calculatedBudget,
+                maxMembers: maxMembers,
                 upiId: document.getElementById('adminUpiId').value.trim(),
                 driveUrl: document.getElementById('adminDriveLink').value,
-                members: [{ name: adminNameInput, phone: adminPhoneInput, role: "Admin", paid: 0 }],
+                members: initialMembers,
+                pendingMembers: [],
+                rejectedMembers: [],
                 expenses: []
             };
 
@@ -332,63 +415,111 @@
             currentUser = { name: adminNameInput, isAdmin: true };
 
             enterDashboard();
-            alert(`🎉 ட்ரிப் ரூம் வெற்றிகரமாக உருவாக்கப்பட்டது!\n\n6-Digit Room ID: ${random6Digit}\nPassword: ${newTrip.password}\nAdmin: ${adminNameInput}`);
+            alert(`🎉 ட்ரிப் ரூம் உருவாக்கப்பட்டது!\n\nRoom ID: ${random6Digit}`);
             this.reset();
             renderRecentTrips();
         });
 
-        // Member Join Trip Handler
+        // Member Join Request Handler
         document.getElementById('joinTripForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const memberName = document.getElementById('joinMemberName').value.trim();
             const memberPhone = document.getElementById('joinMemberPhone').value.trim();
             const inputRoomId = document.getElementById('joinRoomId').value.trim();
             const inputPass = document.getElementById('joinPassword').value;
+            const statusBanner = document.getElementById('joinStatusBanner');
 
+            tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
             const foundTrip = tripsDatabase.find(t => t.roomId === inputRoomId);
 
             if (foundTrip) {
                 if (inputPass === foundTrip.password) {
-                    if (foundTrip.members.length >= foundTrip.maxMembers) {
-                        alert(`❌ மன்னிக்கவும்! இந்த ரூம் ஃபுல் ஆகிவிட்டது (Max Limit: ${foundTrip.maxMembers} Members).`);
+                    if (foundTrip.members.some(m => m.name.toLowerCase() === memberName.toLowerCase())) {
+                        currentTrip = foundTrip;
+                        currentUser = { name: memberName, isAdmin: false };
+                        saveJoinedTripLocally(foundTrip.roomId, memberName);
+                        enterDashboard();
                         return;
                     }
 
-                    let existingMember = foundTrip.members.find(m => m.name.toLowerCase() === memberName.toLowerCase());
-                    if (!existingMember) {
-                        foundTrip.members.push({ name: memberName, phone: memberPhone, role: "Member", paid: 0 });
-                        saveToStorage();
+                    if (foundTrip.rejectedMembers && foundTrip.rejectedMembers.some(m => m.name.toLowerCase() === memberName.toLowerCase())) {
+                        statusBanner.className = "mt-4 p-4 rounded-xl border bg-rose-900 border-rose-700 text-rose-200 text-xs leading-relaxed space-y-1";
+                        statusBanner.innerHTML = `<strong>❌ மன்னிக்கவும்!</strong> அட்மின் உங்களது கோரிக்கையை நிராகரித்துவிட்டார்.`;
+                        statusBanner.classList.remove('hidden');
+                        return;
                     }
 
-                    currentTrip = foundTrip;
-                    currentUser = { name: memberName, isAdmin: (foundTrip.adminName === memberName) };
+                    if (!foundTrip.pendingMembers) foundTrip.pendingMembers = [];
+                    if (!foundTrip.pendingMembers.some(m => m.name.toLowerCase() === memberName.toLowerCase())) {
+                        foundTrip.pendingMembers.push({ name: memberName, phone: memberPhone });
+                        const idx = tripsDatabase.findIndex(t => t.roomId === inputRoomId);
+                        if (idx !== -1) tripsDatabase[idx] = foundTrip;
+                        localStorage.setItem('dkv_trips_db', JSON.stringify(tripsDatabase));
+                    }
 
-                    enterDashboard();
-                    alert(`🎉 ${memberName}, வெற்றிகரமாக ரூமுக்குள் நுழைந்துவிட்டீர்கள்!`);
+                    statusBanner.className = "mt-4 p-4 rounded-xl border bg-emerald-900 border-emerald-700 text-emerald-200 text-xs leading-relaxed space-y-1";
+                    statusBanner.innerHTML = `
+                        <strong>✅ கோரிக்கை வெற்றிகரமாக அனுப்பப்பட்டது!</strong><br>
+                        ${memberName}, அட்மின் ஒப்புதல் அளித்த பிறகு, இந்த பக்கத்தில் உங்களது ட்ரிப் கீழே லிஸ்ட் காமிக்கும். அதை ஒரு கிளிக் செய்து நேராக உள்ளே சென்று கொள்ளலாம்!
+                    `;
+                    statusBanner.classList.remove('hidden');
                     this.reset();
                     renderRecentTrips();
+
                 } else {
-                    alert("❌ தவறு! பாஸ்வேர்ட் சரியாக இல்லை.");
+                    statusBanner.className = "mt-4 p-4 rounded-xl border bg-rose-900 border-rose-700 text-rose-200 text-xs leading-relaxed space-y-1";
+                    statusBanner.innerHTML = `<strong>❌ தவறு!</strong> பாஸ்வேர்ட் சரியாக இல்லை.`;
+                    statusBanner.classList.remove('hidden');
                 }
             } else {
-                alert("❌ இந்த 6-Digit ரூம் ஐடி கிடைக்கவில்லை!");
+                statusBanner.className = "mt-4 p-4 rounded-xl border bg-rose-900 border-rose-700 text-rose-200 text-xs leading-relaxed space-y-1";
+                statusBanner.innerHTML = `<strong>❌ தவறு!</strong> இந்த Room ID கிடைக்கவில்லை.`;
+                statusBanner.classList.remove('hidden');
             }
         });
 
-        function quickJoinTrip(roomId) {
+        function saveJoinedTripLocally(roomId, memberName) {
+            let joinedList = JSON.parse(localStorage.getItem('dkv_joined_trips')) || [];
+            let entry = { roomId, memberName };
+            if (!joinedList.some(j => j.roomId === roomId && j.memberName === memberName)) {
+                joinedList.push(entry);
+                localStorage.setItem('dkv_joined_trips', JSON.stringify(joinedList));
+            }
+        }
+
+        // Quick Access / Smart One-Click Access
+        function quickAccessTrip(roomId, memberName = null, isAdmin = false) {
+            tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
             const foundTrip = tripsDatabase.find(t => t.roomId === roomId);
-            if (foundTrip) {
+            if (!foundTrip) {
+                alert("இந்த ட்ரிப் தரவு இந்த சாதனத்தில் கிடைக்கவில்லை.");
+                return;
+            }
+
+            if (isAdmin) {
                 currentTrip = foundTrip;
                 currentUser = { name: foundTrip.adminName, isAdmin: true };
                 enterDashboard();
+            } else {
+                let approved = foundTrip.members.find(m => m.name.toLowerCase() === memberName.toLowerCase());
+                if (approved) {
+                    currentTrip = foundTrip;
+                    currentUser = { name: approved.name, isAdmin: false };
+                    enterDashboard();
+                } else {
+                    alert(`⏳ ${memberName}, அட்மின் இன்னும் உங்கள் கோரிக்கையை ஏற்கவில்லை. தயவுசெய்து காத்திருக்கவும்.`);
+                }
             }
         }
 
         function renderRecentTrips() {
+            tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
             const container = document.getElementById('recentTripsContainer');
             const list = document.getElementById('recentTripsList');
             
-            if (tripsDatabase.length === 0) {
+            let joinedList = JSON.parse(localStorage.getItem('dkv_joined_trips')) || [];
+
+            if (tripsDatabase.length === 0 && joinedList.length === 0) {
                 container.classList.add('hidden');
                 return;
             }
@@ -399,12 +530,12 @@
             tripsDatabase.forEach(trip => {
                 const div = document.createElement('div');
                 div.className = "flex justify-between items-center bg-gray-700 p-3 rounded-xl border border-gray-600 hover:border-cyan-400 transition cursor-pointer";
-                div.onclick = () => quickJoinTrip(trip.roomId);
+                div.onclick = () => quickAccessTrip(trip.roomId, null, true);
 
                 div.innerHTML = `
                     <div>
-                        <h4 class="font-bold text-white text-sm">${trip.name}</h4>
-                        <p class="text-xs text-cyan-300 font-mono">Room ID: ${trip.roomId} | Admin: ${trip.adminName}</p>
+                        <h4 class="font-bold text-white text-sm">👑 ${trip.name} (Admin)</h4>
+                        <p class="text-xs text-cyan-300 font-mono">Room ID: ${trip.roomId}</p>
                     </div>
                     <button class="bg-cyan-500 hover:bg-cyan-600 text-gray-900 text-xs px-3 py-1.5 rounded-lg font-semibold transition">
                         உள்ளே செல் &rarr;
@@ -412,9 +543,40 @@
                 `;
                 list.appendChild(div);
             });
+
+            joinedList.forEach(item => {
+                const foundTrip = tripsDatabase.find(t => t.roomId === item.roomId);
+                if (foundTrip) {
+                    let isApproved = foundTrip.members.some(m => m.name.toLowerCase() === item.memberName.toLowerCase());
+                    let statusText = isApproved ? `<span class="text-emerald-400">Approved ✅</span>` : `<span class="text-amber-400">Waiting for Approval... ⏳</span>`;
+
+                    const div = document.createElement('div');
+                    div.className = "flex justify-between items-center bg-gray-700 p-3 rounded-xl border border-gray-600 hover:border-cyan-400 transition cursor-pointer";
+                    div.onclick = () => quickAccessTrip(foundTrip.roomId, item.memberName, false);
+
+                    div.innerHTML = `
+                        <div>
+                            <h4 class="font-bold text-white text-sm">👤 ${foundTrip.name} (${item.memberName})</h4>
+                            <p class="text-xs text-cyan-300 font-mono">Room ID: ${foundTrip.roomId} | ${statusText}</p>
+                        </div>
+                        <button class="bg-emerald-500 hover:bg-emerald-600 text-gray-900 text-xs px-3 py-1.5 rounded-lg font-semibold transition">
+                            உள்ளே செல் &rarr;
+                        </button>
+                    `;
+                    list.appendChild(div);
+                }
+            });
         }
 
         function saveToStorage() {
+            if (!currentTrip) return;
+            // CRITICAL FIX: Automatically recalculate budget based on active members count
+            currentTrip.budget = currentTrip.members.length * currentTrip.perPersonShare;
+
+            const index = tripsDatabase.findIndex(t => t.roomId === currentTrip.roomId);
+            if (index !== -1) {
+                tripsDatabase[index] = currentTrip;
+            }
             localStorage.setItem('dkv_trips_db', JSON.stringify(tripsDatabase));
         }
 
@@ -426,6 +588,9 @@
             statusBadge.innerText = `Room Active (${currentTrip.roomId})`;
             statusBadge.classList.remove('hidden');
             document.getElementById('logoutBtn').classList.remove('hidden');
+
+            // Ensure budget is fresh and calculated
+            currentTrip.budget = currentTrip.members.length * currentTrip.perPersonShare;
 
             document.getElementById('displayTripName').innerText = currentTrip.name;
             document.getElementById('displayRoomIdText').innerText = `Room ID: ${currentTrip.roomId} | Password: ${currentTrip.password}`;
@@ -442,13 +607,33 @@
                 driveBtn.classList.add('hidden');
             }
 
-            // Show/Hide Admin Payment Form based on Admin role
             const adminPaymentCard = document.getElementById('adminPaymentCard');
+            const adminTripEndSection = document.getElementById('adminTripEndSection');
+            const editBudgetBtn = document.getElementById('editBudgetBtn');
+            const editMembersBtn = document.getElementById('editMembersBtn');
+            const adminRequestsCard = document.getElementById('adminRequestsCard');
+
             if (currentUser.isAdmin) {
                 adminPaymentCard.classList.remove('hidden');
+                adminTripEndSection.classList.remove('hidden');
+                editBudgetBtn.classList.remove('hidden');
+                editMembersBtn.classList.remove('hidden');
+                adminRequestsCard.classList.remove('hidden');
                 populateMemberDropdown();
+                renderPendingRequests();
+
+                if (adminRefreshInterval) clearInterval(adminRefreshInterval);
+                adminRefreshInterval = setInterval(() => {
+                    renderPendingRequests();
+                }, 3000);
+
             } else {
                 adminPaymentCard.classList.add('hidden');
+                adminTripEndSection.classList.add('hidden');
+                editBudgetBtn.classList.add('hidden');
+                editMembersBtn.classList.add('hidden');
+                adminRequestsCard.classList.add('hidden');
+                if (adminRefreshInterval) clearInterval(adminRefreshInterval);
             }
 
             generateQRCode(currentTrip.upiId, currentTrip.adminName);
@@ -457,7 +642,70 @@
             updateStats();
         }
 
-        // Populate Member Dropdown for Admin Payment Form
+        // Admin Approval Logic
+        function renderPendingRequests() {
+            tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
+            currentTrip = tripsDatabase.find(t => t.roomId === currentTrip.roomId) || currentTrip;
+
+            const container = document.getElementById('pendingRequestsContainer');
+            if (!currentTrip.pendingMembers || currentTrip.pendingMembers.length === 0) {
+                container.innerHTML = `<p class="text-gray-400">புதிய கோரிக்கைகள் எதுவும் இல்லை.</p>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            currentTrip.pendingMembers.forEach((req, index) => {
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center bg-gray-700 p-2 rounded border border-gray-600 text-xs";
+                div.innerHTML = `
+                    <div>
+                        <span class="font-bold text-white">${req.name}</span>
+                        <p class="text-gray-400 font-mono">${req.phone}</p>
+                    </div>
+                    <div class="flex gap-1">
+                        <button onclick="approveMember(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded">ஏற்றுக்கொள்</button>
+                        <button onclick="rejectMember(${index})" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded">நிராகரி</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function approveMember(index) {
+            tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
+            currentTrip = tripsDatabase.find(t => t.roomId === currentTrip.roomId);
+
+            const req = currentTrip.pendingMembers[index];
+            if (currentTrip.members.length >= currentTrip.maxMembers) {
+                alert("❌ ரூம் லிமிட் முடிந்துவிட்டது!");
+                return;
+            }
+
+            currentTrip.members.push({ name: req.name, phone: req.phone, role: "Member", paid: 0 });
+            currentTrip.pendingMembers.splice(index, 1);
+            
+            // This will trigger automatic budget recalculation (Members Count * Per Person Share)
+            saveToStorage();
+            saveJoinedTripLocally(currentTrip.roomId, req.name);
+
+            enterDashboard(); // Immediately refresh dashboard stats & total budget
+            renderPendingRequests();
+            alert(`✅ ${req.name} அனுமதிக்கப்பட்டார்! புதிய நபரின் வருகையால் மொத்த பட்ஜெட் ஆட்டோமேட்டிக்காக அப்டேட் ஆனது.`);
+        }
+
+        function rejectMember(index) {
+            tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
+            currentTrip = tripsDatabase.find(t => t.roomId === currentTrip.roomId);
+
+            const req = currentTrip.pendingMembers[index];
+            if (!currentTrip.rejectedMembers) currentTrip.rejectedMembers = [];
+            currentTrip.rejectedMembers.push(req);
+            currentTrip.pendingMembers.splice(index, 1);
+            saveToStorage();
+            renderPendingRequests();
+            alert(`❌ ${req.name} நிராகரிக்கப்பட்டார்.`);
+        }
+
         function populateMemberDropdown() {
             const select = document.getElementById('paymentMemberSelect');
             select.innerHTML = "";
@@ -469,7 +717,68 @@
             });
         }
 
-        // Handle Admin recording member payment
+        // Admin Edit Per-Person Share Handler
+        function openEditBudgetModal() {
+            if (!currentUser.isAdmin) return;
+            document.getElementById('newShareInput').value = currentTrip.perPersonShare || 0;
+            toggleEditBudgetModal();
+        }
+
+        function toggleEditBudgetModal() {
+            document.getElementById('editBudgetModal').classList.toggle('hidden');
+        }
+
+        document.getElementById('editBudgetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!currentUser.isAdmin) return;
+
+            const newShare = parseFloat(document.getElementById('newShareInput').value);
+            if (isNaN(newShare)) {
+                alert("சரியான மதிப்பை உள்ளிடவும்.");
+                return;
+            }
+
+            currentTrip.perPersonShare = newShare;
+            saveToStorage();
+
+            document.getElementById('displayShareAmount').innerText = `₹${currentTrip.perPersonShare}`;
+            document.getElementById('statBudget').innerText = `₹${currentTrip.budget}`;
+            toggleEditBudgetModal();
+            updateStats();
+            renderMembersList();
+            alert("✅ நபர் பங்குத் தொகை மாற்றப்பட்டது, மொத்த பட்ஜெட் ஆட்டோமேட்டிக்காக அப்டேட் ஆனது!");
+        });
+
+        // Admin Edit Members Limit Handlers
+        function openEditMembersModal() {
+            if (!currentUser.isAdmin) return;
+            document.getElementById('newMaxMembersInput').value = currentTrip.maxMembers;
+            toggleEditMembersModal();
+        }
+
+        function toggleEditMembersModal() {
+            document.getElementById('editMembersModal').classList.toggle('hidden');
+        }
+
+        document.getElementById('editMembersForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!currentUser.isAdmin) return;
+
+            const newMax = parseInt(document.getElementById('newMaxMembersInput').value);
+            if (isNaN(newMax) || newMax < currentTrip.members.length) {
+                alert("தற்போதுள்ள உறுப்பினர்களை விடக் குறைவாக வைக்க முடியாது!");
+                return;
+            }
+
+            currentTrip.maxMembers = newMax;
+            saveToStorage();
+
+            document.getElementById('statMembers').innerText = `${currentTrip.members.length} / ${currentTrip.maxMembers}`;
+            toggleEditMembersModal();
+            alert("✅ நபர்கள் லிமிட் மாற்றப்பட்டது!");
+        });
+
+        // Admin Record Member Payment
         document.getElementById('adminPaymentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (!currentUser.isAdmin) return;
@@ -490,31 +799,109 @@
 
             saveToStorage();
             renderMembersList();
-            alert(`✅ ${memberName}-ன் கணக்கில் ₹${amt} வெற்றிகரமாக சேர்க்கப்பட்டது!`);
+            alert(`✅ ${memberName}-ன் கணக்கில் ₹${amt} சேர்க்கப்பட்டது!`);
             this.reset();
         });
 
-        // Render Members and individual paid/pending status
+        // Add Expense
+        document.getElementById('expenseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const spender = document.getElementById('spenderName').value.trim();
+            const reason = document.getElementById('expenseReason').value.trim();
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB'); 
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); 
+            const dateTimeFormatted = `${dateStr}, ${timeStr}`;
+
+            currentTrip.expenses.push({ spender, reason, amount, dateTime: dateTimeFormatted });
+            saveToStorage();
+
+            renderExpenses();
+            updateStats();
+            this.reset();
+        });
+
+        // Trigger Trip Settlement & Split-up calculation
+        function triggerTripSettlement() {
+            if (!currentUser.isAdmin) return;
+
+            const totalSpent = currentTrip.expenses.reduce((acc, curr) => acc + curr.amount, 0);
+            const totalMembers = currentTrip.members.length;
+            const actualSharePerPerson = totalMembers > 0 ? (totalSpent / totalMembers) : 0;
+
+            const contentContainer = document.getElementById('settlementContent');
+            contentContainer.innerHTML = "";
+
+            let summaryHtml = `
+                <div class="bg-gray-700 p-3 rounded-lg text-xs space-y-1 mb-4 text-cyan-300 font-mono">
+                    <p>மொத்த பட்ஜெட் (Auto): ₹${currentTrip.budget}</p>
+                    <p>உண்மையான மொத்த செலவு: ₹${totalSpent}</p>
+                    <p>உறுப்பினர்கள் எண்ணிக்கை: ${totalMembers}</p>
+                    <p>சரியான நபர் பங்கு (Actual Share / Person): ₹${actualSharePerPerson.toFixed(2)}</p>
+                </div>
+            `;
+
+            let membersHtml = "";
+            currentTrip.members.forEach(m => {
+                const paid = m.paid || 0;
+                const diff = paid - actualSharePerPerson; 
+
+                let statusBadge = "";
+                if (diff > 0) {
+                    statusBadge = `<span class="text-emerald-400 font-bold">🎉 இவருக்கு அட்மின் தர வேண்டியது (Refund): ₹${diff.toFixed(2)}</span>`;
+                } else if (diff < 0) {
+                    statusBadge = `<span class="text-rose-400 font-bold">⚠️ இவர் இன்னும் அட்மினுக்குத் தர வேண்டியது (Balance Due): ₹${Math.abs(diff).toFixed(2)}</span>`;
+                } else {
+                    statusBadge = `<span class="text-cyan-300 font-bold">✅ கணக்கு கரெக்ட் (Settled Full)</span>`;
+                }
+
+                membersHtml += `
+                    <div class="bg-gray-750 border border-gray-700 p-3 rounded-xl space-y-1 text-xs">
+                        <div class="flex justify-between font-bold text-white text-sm">
+                            <span>${m.name} (${m.role})</span>
+                            <span>கொடுத்தது: ₹${paid}</span>
+                        </div>
+                        <div>${statusBadge}</div>
+                    </div>
+                `;
+            });
+
+            contentContainer.innerHTML = summaryHtml + membersHtml;
+            toggleSettlementModal();
+        }
+
+        function toggleSettlementModal() {
+            document.getElementById('settlementModal').classList.toggle('hidden');
+        }
+
+        // Render Members List with Click-to-Call Phone Numbers
         function renderMembersList() {
             const listContainer = document.getElementById('membersListContainer');
             listContainer.innerHTML = "";
+
+            const totalSpent = currentTrip.expenses.reduce((acc, curr) => acc + curr.amount, 0);
+            const totalMembers = currentTrip.members.length;
+            const actualSharePerPerson = totalMembers > 0 ? (totalSpent / totalMembers) : 0;
 
             currentTrip.members.forEach((member) => {
                 const li = document.createElement('li');
                 li.className = "bg-gray-700 p-3 rounded-lg border border-gray-600 text-xs space-y-1.5";
                 
                 const paid = member.paid || 0;
-                const target = currentTrip.perPersonShare || 0;
-                const balance = target - paid;
+                const balance = actualSharePerPerson - paid;
                 
                 let balanceText = balance > 0 
-                    ? `<span class="text-rose-400 font-semibold">பாக்கி: ₹${balance}</span>` 
-                    : `<span class="text-emerald-400 font-semibold">செட்டில்டு ✅</span>`;
+                    ? `<span class="text-rose-400 font-semibold">பாக்கி தர வேண்டியது: ₹${balance.toFixed(2)}</span>` 
+                    : (balance < 0 ? `<span class="text-emerald-400 font-semibold">பெற வேண்டியது (Refund): ₹${Math.abs(balance).toFixed(2)}</span>` : `<span class="text-emerald-400 font-semibold">செட்டில்டு ✅</span>`);
 
                 let transferBtn = "";
                 if (currentUser.isAdmin && member.role !== "Admin") {
                     transferBtn = `<button onclick="makeAdmin('${member.name}', '${member.phone}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-0.5 rounded">Admin மாற்று</button>`;
                 }
+
+                const phoneLink = member.phone ? `<a href="tel:${member.phone}" class="text-cyan-400 hover:underline font-mono">📞 ${member.phone}</a>` : `<span class="text-gray-400 font-mono">Admin</span>`;
 
                 li.innerHTML = `
                     <div class="flex justify-between items-center">
@@ -523,6 +910,9 @@
                             <span class="text-gray-400 text-[10px] ml-1">(${member.role})</span>
                         </div>
                         <div>${transferBtn}</div>
+                    </div>
+                    <div class="flex justify-between items-center text-gray-300">
+                        <span>${phoneLink}</span>
                     </div>
                     <div class="flex justify-between items-center text-gray-300 border-t border-gray-600 pt-1.5">
                         <span>கொடுத்தது: <strong class="text-cyan-300">₹${paid}</strong></span>
@@ -552,11 +942,12 @@
             saveToStorage();
             document.getElementById('displayAdminText').innerText = `Admin: ${currentTrip.adminName} (${currentTrip.adminPhone})`;
             generateQRCode(currentTrip.upiId, currentTrip.adminName);
-            enterDashboard(); // Refresh UI & dropdowns
+            enterDashboard();
             alert(`🎉 புதிய அட்மின்னாக ${memberName} மாற்றப்பட்டார்!`);
         }
 
         function logoutTrip() {
+            if (adminRefreshInterval) clearInterval(adminRefreshInterval);
             document.getElementById('dashboardView').classList.add('hidden');
             document.getElementById('authView').classList.remove('hidden');
             document.getElementById('roomStatusBadge').classList.add('hidden');
@@ -589,25 +980,6 @@
             document.getElementById('qrModal').classList.toggle('hidden');
         }
 
-        document.getElementById('expenseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const spender = document.getElementById('spenderName').value.trim();
-            const reason = document.getElementById('expenseReason').value.trim();
-            const amount = parseFloat(document.getElementById('expenseAmount').value);
-
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-GB'); 
-            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); 
-            const dateTimeFormatted = `${dateStr}, ${timeStr}`;
-
-            currentTrip.expenses.push({ spender, reason, amount, dateTime: dateTimeFormatted });
-            saveToStorage();
-
-            renderExpenses();
-            updateStats();
-            this.reset();
-        });
-
         function renderExpenses() {
             const tbody = document.getElementById('expenseTableBody');
             if (currentTrip.expenses.length === 0) {
@@ -632,17 +1004,26 @@
         function updateStats() {
             const totalSpent = currentTrip.expenses.reduce((acc, curr) => acc + curr.amount, 0);
             const balance = currentTrip.budget - totalSpent;
+            const warningBanner = document.getElementById('budgetWarningBanner');
 
             document.getElementById('statSpent').innerText = `₹${totalSpent}`;
             document.getElementById('statMembers').innerText = `${currentTrip.members.length} / ${currentTrip.maxMembers}`;
             
             const balanceElem = document.getElementById('statBalance');
-            balanceElem.innerText = `₹${balance}`;
-            
-            if (balance < 0) {
+            const balanceLabel = document.getElementById('statBalanceLabel');
+
+            if (totalSpent > currentTrip.budget) {
+                warningBanner.classList.remove('hidden');
+                balanceElem.innerText = `-₹${Math.abs(balance)}`;
                 balanceElem.className = "text-xl font-bold text-rose-500 mt-1";
+                balanceLabel.innerText = "பட்ஜெட் பற்றாக்குறை (Over Budget)";
+                balanceLabel.className = "text-xs text-rose-400 font-semibold";
             } else {
+                warningBanner.classList.add('hidden');
+                balanceElem.innerText = `₹${balance}`;
                 balanceElem.className = "text-xl font-bold text-emerald-400 mt-1";
+                balanceLabel.innerText = "மீதி தொகை";
+                balanceLabel.className = "text-xs text-gray-400";
             }
         }
     </script>

@@ -18,10 +18,14 @@
     <!-- Header / Navbar -->
     <header class="bg-gray-800 border-b border-gray-700 shadow-md">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-cyan-400 tracking-wider">🚀 DKV Trip Manager</h1>
+            <h1 id="appTitle" class="text-2xl font-bold text-cyan-400 tracking-wider">🚀 DKV Trip Manager</h1>
             <div class="flex items-center gap-3">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" class="bg-gray-700 hover:bg-gray-600 text-cyan-300 border border-cyan-500/50 text-xs px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5">
+                    🌐 <span id="langBtnText">தமிழ்</span>
+                </button>
                 <span id="roomStatusBadge" class="text-xs bg-rose-900 text-rose-300 px-3 py-1 rounded-full font-medium hidden">Room Active</span>
-                <button id="logoutBtn" onclick="logoutTrip()" class="hidden bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-medium">Logout</button>
+                <button id="logoutBtn" onclick="logoutTrip()" class="hidden bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-medium" data-en="Logout" data-ta="வெளியேறு">Logout</button>
             </div>
         </div>
     </header>
@@ -30,59 +34,59 @@
     <main id="authView" class="flex-grow flex flex-col items-center justify-center px-4 py-12 space-y-8">
         <div class="max-w-md w-full bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700">
             <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-cyan-400">Trip Manager</h2>
-                <p class="text-xs text-gray-400 mt-1">Start a new trip or join your friends' room</p>
+                <h2 id="authHeading" class="text-2xl font-bold text-cyan-400">Trip Manager</h2>
+                <p id="authSubheading" class="text-xs text-gray-400 mt-1">Start a new trip or join your friends' room</p>
             </div>
 
             <!-- Tabs -->
             <div id="authTabs" class="flex border-b border-gray-700 mb-6">
-                <button id="tabCreateBtn" onclick="switchAuthTab('create')" class="w-1/2 pb-2 font-semibold text-cyan-400 border-b-2 border-cyan-400 text-sm transition">Admin (Create)</button>
-                <button id="tabJoinBtn" onclick="switchAuthTab('join')" class="w-1/2 pb-2 font-semibold text-gray-400 text-sm transition">Members (Join)</button>
+                <button id="tabCreateBtn" onclick="switchAuthTab('create')" class="w-1/2 pb-2 font-semibold text-cyan-400 border-b-2 border-cyan-400 text-sm transition" data-en="Admin (Create)" data-ta="அட்மின் (Create)">Admin (Create)</button>
+                <button id="tabJoinBtn" onclick="switchAuthTab('join')" class="w-1/2 pb-2 font-semibold text-gray-400 text-sm transition" data-en="Members (Join)" data-ta="நண்பர்கள் (Join)">Members (Join)</button>
             </div>
 
-            <!-- Create Trip Form (Admin) -->
+            <!-- Create Trip Form (Admin - Simplified) -->
             <form id="createTripForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Admin Name</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Admin Name" data-ta="அட்மின் பெயர்">Admin Name</label>
                     <input type="text" id="adminName" required placeholder="e.g. Velkumudhan" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Admin Phone Number</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Admin Phone Number" data-ta="அட்மின் போன் நம்பர்">Admin Phone Number</label>
                     <input type="tel" id="adminPhone" required placeholder="9876543210" maxlength="10" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Trip Name</label>
-                    <input type="text" id="adminTripName" required placeholder="e.g. Ooty Trip" 
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Trip Name" data-ta="ட்ரிப் பெயர்">Trip Name</label>
+                    <input type="text" id="adminTripName" required placeholder="e.g. Vagamon Trip" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Per Person Share (₹)</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Per Person Share (₹)" data-ta="ஒரு நபருக்கான பங்குத் தொகை (₹)">Per Person Share (₹)</label>
                     <input type="number" id="adminPerPersonShare" required placeholder="1000" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Max Members Limit</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Max Members Limit" data-ta="மொத்த நபர்கள் லிமிட்">Max Members Limit</label>
                     <input type="number" id="adminMaxMembers" required min="1" placeholder="e.g. 5" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Admin UPI ID (e.g. name@oksbi)</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Admin UPI ID (e.g. name@oksbi)" data-ta="அட்மின் UPI ID (எ.கா: name@oksbi)">Admin UPI ID (e.g. name@oksbi)</label>
                     <input type="text" id="adminUpiId" required placeholder="velku@oksbi" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Google Drive Photos Link</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Google Drive Photos Link" data-ta="Google Drive போட்டோஸ் லிங்க்">Google Drive Photos Link</label>
                     <input type="url" id="adminDriveLink" placeholder="https://drive.google.com/..." 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Set Room Password</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Set Room Password" data-ta="பாஸ்வேர்ட் செட் செய்">Set Room Password</label>
                     <input type="password" id="adminPassword" required placeholder="Password for members" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
-                <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg">
+                <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg" data-en="Create Trip Room" data-ta="ட்ரிப் ரூம் உருவாக்கு">
                     Create Trip Room
                 </button>
             </form>
@@ -90,26 +94,26 @@
             <!-- Join Trip Form (Members) -->
             <form id="joinTripForm" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Your Name</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Your Name" data-ta="உங்கள் பெயர்">Your Name</label>
                     <input type="text" id="joinMemberName" required placeholder="e.g. Arun" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Phone Number</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Phone Number" data-ta="போன் நம்பர்">Phone Number</label>
                     <input type="tel" id="joinMemberPhone" required placeholder="9876543210" maxlength="10" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">6-Digit Room ID</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="6-Digit Room ID" data-ta="ரூம் ஐடி (6-Digit Room ID)">6-Digit Room ID</label>
                     <input type="text" id="joinRoomId" required maxlength="6" placeholder="e.g. 482910" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Password</label>
+                    <label class="block text-sm text-gray-400 mb-1" data-en="Password" data-ta="பாஸ்வேர்ட்">Password</label>
                     <input type="password" id="joinPassword" required placeholder="Room Password" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
-                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg">
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg" data-en="Request Join Room" data-ta="ரூமுக்கு நுழைவு கோரு">
                     Request Join Room
                 </button>
             </form>
@@ -119,7 +123,7 @@
 
         <!-- Recent Trips -->
         <div id="recentTripsContainer" class="max-w-md w-full bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 hidden">
-            <h3 class="text-md font-semibold text-cyan-400 mb-3 flex items-center gap-2">
+            <h3 id="recentTripsHeading" class="text-md font-semibold text-cyan-400 mb-3 flex items-center gap-2">
                 📂 Your Joined / Recent Trips
             </h3>
             <div id="recentTripsList" class="space-y-3"></div>
@@ -135,19 +139,19 @@
             
             <!-- Admin Contribution Input Card -->
             <div id="adminPaymentCard" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700 hidden">
-                <h2 class="text-md font-semibold text-cyan-400 mb-3">💵 Receive Member Share (Admin)</h2>
+                <h2 id="adminPayTitle" class="text-md font-semibold text-cyan-400 mb-3">💵 Receive Member Share (Admin)</h2>
                 <form id="adminPaymentForm" class="space-y-3">
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1">Select Member</label>
+                        <label id="lblMemberSelect" class="block text-xs text-gray-400 mb-1">Select Member</label>
                         <select id="paymentMemberSelect" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1">Amount Paid (₹)</label>
+                        <label id="lblPaidAmount" class="block text-xs text-gray-400 mb-1">Amount Paid (₹)</label>
                         <input type="number" id="paymentAmount" required placeholder="500" 
                             class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
                     </div>
-                    <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition">
+                    <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition" data-en="Save Payment" data-ta="பணம் பெற்றதை சேமி">
                         Save Payment
                     </button>
                 </form>
@@ -156,43 +160,61 @@
             <!-- Admin Pending Requests Card -->
             <div id="adminRequestsCard" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700 hidden">
                 <div class="flex justify-between items-center mb-3">
-                    <h3 class="text-md font-semibold text-amber-400">🔔 Join Requests</h3>
+                    <h3 id="pendingReqTitle" class="text-md font-semibold text-amber-400">🔔 Join Requests</h3>
                     <button onclick="renderPendingRequests()" class="text-xs bg-gray-700 hover:bg-gray-600 text-cyan-300 px-2 py-1 rounded transition">🔄 Refresh</button>
                 </div>
                 <div id="pendingRequestsContainer" class="space-y-2 text-xs">
-                    <p class="text-gray-400">No pending requests.</p>
+                    <p id="noReqText" class="text-gray-400">No pending requests.</p>
                 </div>
             </div>
 
             <!-- Add Expense Card -->
             <div id="addExpenseCardContainer" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700">
-                <h2 class="text-lg font-semibold text-cyan-400 mb-4">💸 Add Expense</h2>
+                <h2 id="addExpenseTitle" class="text-lg font-semibold text-cyan-400 mb-4">💸 Add Expense</h2>
                 <form id="expenseForm" class="space-y-4">
                     <div>
-                        <label class="block text-sm text-gray-400 mb-1">Spender Name</label>
+                        <label id="lblSpenderName" class="block text-sm text-gray-400 mb-1">Spender Name</label>
                         <input type="text" id="spenderName" required placeholder="e.g. Velku" 
                             class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-400 mb-1">Expense Reason</label>
+                        <label id="lblExpenseReason" class="block text-sm text-gray-400 mb-1">Expense Reason</label>
                         <input type="text" id="expenseReason" required placeholder="e.g. Food / Petrol" 
                             class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-400 mb-1">Amount (₹)</label>
+                        <label id="lblExpenseAmount" class="block text-sm text-gray-400 mb-1">Amount (₹)</label>
                         <input type="number" id="expenseAmount" required placeholder="500" 
                             class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                     </div>
-                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2 rounded-lg transition duration-200">
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2 rounded-lg transition duration-200" data-en="Add Expense" data-ta="செலவை சேர்">
                         Add Expense
+                    </button>
+                </form>
+            </div>
+
+            <!-- Admin Setup: Pickup & Google Maps Link -->
+            <div id="adminPickupCard" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700 hidden">
+                <h3 class="text-md font-semibold text-cyan-400 mb-3">📍 Boarding / Pickup Info</h3>
+                <form id="pickupForm" class="space-y-3 text-xs">
+                    <div>
+                        <label class="block text-gray-400 mb-1">Pickup Location Name</label>
+                        <input type="text" id="pickupNameInput" placeholder="e.g. Poonamallee Bus Stand" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Google Maps Link</label>
+                        <input type="url" id="pickupMapInput" placeholder="https://maps.app.goo.gl/..." class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
+                    </div>
+                    <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 rounded-lg transition">
+                        Save Pickup Location
                     </button>
                 </form>
             </div>
 
             <!-- Members List & Contribution Tracker -->
             <div class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700">
-                <h3 class="text-md font-semibold text-cyan-400 mb-3">👥 Members & Contributions</h3>
-                <div class="text-xs text-gray-400 mb-3">Per Person Share: <span id="displayShareAmount" class="text-cyan-300 font-bold">₹0</span></div>
+                <h3 id="membersListTitle" class="text-md font-semibold text-cyan-400 mb-3">👥 Members & Contributions</h3>
+                <div class="text-xs text-gray-400 mb-3"><span data-en="Per Person Share: " data-ta="பங்குத் தொகை: ">Per Person Share: </span><span id="displayShareAmount" class="text-cyan-300 font-bold">₹0</span></div>
                 <ul id="membersListContainer" class="space-y-3 text-sm text-gray-300">
                 </ul>
             </div>
@@ -206,8 +228,8 @@
                 <div class="flex items-center gap-3">
                     <span class="text-2xl">🔒</span>
                     <div>
-                        <h4 class="font-bold text-sm">Trip Closed & Locked (Memories Mode)</h4>
-                        <p class="text-xs text-indigo-300">This trip has ended. You can view memories and final settlement.</p>
+                        <h4 id="closedBannerTitle" class="font-bold text-sm">Trip Closed & Locked (Memories Mode)</h4>
+                        <p id="closedBannerSub" class="text-xs text-indigo-300">This trip has ended. You can view memories and final settlement.</p>
                     </div>
                 </div>
                 <div id="adminEnableContainer" class="hidden">
@@ -221,50 +243,61 @@
             <div id="budgetWarningBanner" class="bg-rose-900 border border-rose-700 text-rose-200 px-4 py-3 rounded-2xl shadow-lg hidden flex items-center gap-3 animate-pulse">
                 <span class="text-2xl">⚠️</span>
                 <div>
-                    <h4 class="font-bold text-sm">Warning: Budget Exceeded!</h4>
-                    <p class="text-xs text-rose-300">Total expenses have exceeded the total budget.</p>
+                    <h4 id="warningTitle" class="font-bold text-sm">Warning: Budget Exceeded!</h4>
+                    <p id="warningSub" class="text-xs text-rose-300">Total expenses have exceeded the total budget.</p>
                 </div>
             </div>
 
             <!-- Trip Summary Card -->
-            <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+            <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700 space-y-4">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h2 id="displayTripName" class="text-2xl font-bold text-white">Trip Name</h2>
                         <p id="displayRoomIdText" class="text-xs text-cyan-400 mt-1 font-mono">Room ID: -</p>
                         <p id="displayAdminText" class="text-xs text-amber-300 mt-1 font-medium">Admin: -</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="toggleQrModal()" class="bg-cyan-600 hover:bg-cyan-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2">
+                        <button onclick="toggleQrModal()" class="bg-cyan-600 hover:bg-cyan-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2" data-en="💳 UPI QR Code" data-ta="💳 UPI QR Code">
                             💳 UPI QR Code
                         </button>
-                        <a id="displayDriveLink" href="#" target="_blank" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2">
+                        <a id="displayDriveLink" href="#" target="_blank" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2" data-en="📁 Photos" data-ta="📁 போட்டோஸ்">
                             📁 Photos
                         </a>
-                        <button id="viewSettlementBtn" onclick="triggerTripSettlement()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2">
+                        <button id="viewSettlementBtn" onclick="triggerTripSettlement()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2" data-en="📊 View Settlement" data-ta="📊 செட்டில்மென்ட் காண்க">
                             📊 View Settlement
                         </button>
                     </div>
                 </div>
 
+                <!-- Pickup Banner with Google Maps Link Button -->
+                <div class="bg-gray-900/80 p-3 rounded-xl border border-gray-700 text-xs flex justify-between items-center text-emerald-300">
+                    <div>
+                        <span>📍 Pickup / Boarding:</span> 
+                        <span id="displayPickupName" class="text-white font-normal ml-1">Not specified yet</span>
+                    </div>
+                    <a id="displayPickupMapLink" href="#" target="_blank" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] px-3 py-1 rounded font-semibold transition">
+                        🗺️ View Map
+                    </a>
+                </div>
+
                 <!-- Stats Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600 flex justify-between items-start">
                         <div>
-                            <p class="text-xs text-gray-400">Members (Joined / Max)</p>
+                            <p id="statMembersLabel" class="text-xs text-gray-400">Members (Joined / Max)</p>
                             <p id="statMembers" class="text-xl font-bold text-amber-400 mt-1">0 / 0</p>
                         </div>
                         <button id="editMembersBtn" onclick="openEditMembersModal()" class="hidden bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-2 py-1 rounded font-medium transition">✏️ Edit</button>
                     </div>
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600 flex justify-between items-start">
                         <div>
-                            <p class="text-xs text-gray-400">Total Budget (Auto)</p>
+                            <p id="statBudgetLabel" class="text-xs text-gray-400">Total Budget (Auto)</p>
                             <p id="statBudget" class="text-xl font-bold text-cyan-400 mt-1">₹0</p>
                         </div>
                         <button id="editBudgetBtn" onclick="openEditBudgetModal()" class="hidden bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-2 py-1 rounded font-medium transition">✏️ Edit Share</button>
                     </div>
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600">
-                        <p class="text-xs text-gray-400">Total Expense</p>
+                        <p id="statSpentLabel" class="text-xs text-gray-400">Total Expense</p>
                         <p id="statSpent" class="text-xl font-bold text-rose-400 mt-1">₹0</p>
                     </div>
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600">
@@ -275,33 +308,95 @@
 
                 <!-- Admin Trip End / Settlement Button -->
                 <div id="adminTripEndSection" class="mt-6 pt-4 border-t border-gray-700 hidden">
-                    <button onclick="triggerTripSettlement()" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2">
+                    <button onclick="triggerTripSettlement()" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2" data-en="🏁 Trip End & Settlement (Split-up)" data-ta="🏁 ட்ரிப் முடிவு & செட்டில்மென்ட்">
                         🏁 Trip End & Settlement (Split-up)
                     </button>
                 </div>
             </div>
 
+            <!-- Trip Route Planner Box (Split in Half with Vertical Arrow Lists) -->
+            <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
+                <h3 class="text-lg font-semibold text-cyan-400 mb-4 flex items-center gap-2">
+                    🛣️ Trip Route Planner
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Going Route Half -->
+                    <div class="bg-gray-900/60 p-4 rounded-xl border border-gray-700 space-y-3">
+                        <h4 class="font-bold text-cyan-300 text-sm border-b border-gray-700 pb-2">👉 Going Route</h4>
+                        <div id="goingRouteList" class="space-y-1 text-xs">
+                            <p class="text-gray-500 italic">No places added yet.</p>
+                        </div>
+                        <div id="goingRouteInputContainer" class="hidden pt-2 flex gap-1">
+                            <input type="text" id="goingPlaceInput" placeholder="Enter place (e.g. Madurai)" class="flex-grow bg-gray-700 border border-gray-600 rounded px-2 py-1 text-white text-xs">
+                            <button onclick="addRoutePlace('going')" class="bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-bold px-3 py-1 rounded text-xs">Add</button>
+                        </div>
+                    </div>
+
+                    <!-- Return Route Half -->
+                    <div class="bg-gray-900/60 p-4 rounded-xl border border-gray-700 space-y-3">
+                        <h4 class="font-bold text-amber-300 text-sm border-b border-gray-700 pb-2">🔄 Return Route</h4>
+                        <div id="returnRouteList" class="space-y-1 text-xs">
+                            <p class="text-gray-500 italic">No places added yet.</p>
+                        </div>
+                        <div id="returnRouteInputContainer" class="hidden pt-2 flex gap-1">
+                            <input type="text" id="returnPlaceInput" placeholder="Enter place (e.g. Theni)" class="flex-grow bg-gray-700 border border-gray-600 rounded px-2 py-1 text-white text-xs">
+                            <button onclick="addRoutePlace('return')" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold px-3 py-1 rounded text-xs">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separate Trip Plan Box (Itinerary & Places) -->
+            <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-cyan-400 flex items-center gap-2">
+                        📅 Detailed Trip Plan & Stops
+                    </h3>
+                    <button id="addPlanBtn" onclick="openPlanModal()" class="hidden text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">+ Add Day Plan</button>
+                </div>
+                <div id="tripPlanListContainer" class="space-y-3 text-xs text-gray-300">
+                    <p class="text-gray-500 italic">No day plans added yet.</p>
+                </div>
+            </div>
+
             <!-- Expense History Table -->
             <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
-                <h3 class="text-lg font-semibold text-cyan-400 mb-4">📋 Expense History</h3>
+                <h3 id="expenseHistoryTitle" class="text-lg font-semibold text-cyan-400 mb-4">📋 Expense History</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="border-b border-gray-700 text-gray-400 text-sm">
-                                <th class="py-3 px-4">Name</th>
-                                <th class="py-3 px-4">Reason</th>
-                                <th class="py-3 px-4">Date & Time</th>
-                                <th class="py-3 px-4 text-right">Amount</th>
+                                <th id="thName" class="py-3 px-4">Name</th>
+                                <th id="thReason" class="py-3 px-4">Reason</th>
+                                <th id="thDate" class="py-3 px-4">Date & Time</th>
+                                <th id="thAmount" class="py-3 px-4 text-right">Amount</th>
                                 <th id="thAction" class="py-3 px-4 text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody id="expenseTableBody" class="divide-y divide-gray-700 text-sm">
                             <tr>
-                                <td colspan="5" class="py-4 text-center text-gray-500">No expenses added yet.</td>
+                                <td colspan="5" class="py-4 text-center text-gray-500" data-en="No expenses added yet." data-ta="இதுவரை செலவுகள் எதுவும் சேர்க்கப்படவில்லை.">No expenses added yet.</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <!-- Live Chat Box Card -->
+            <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700 flex flex-col h-80">
+                <h3 class="text-lg font-semibold text-cyan-400 mb-3 flex items-center gap-2">
+                    💬 Trip Chat Room
+                </h3>
+                <div id="chatMessagesContainer" class="flex-grow overflow-y-auto space-y-3 pr-2 border border-gray-700 p-3 rounded-xl bg-gray-900/50 text-xs">
+                    <p class="text-gray-500 text-center italic">No messages yet. Start the conversation!</p>
+                </div>
+                <form id="chatForm" class="mt-3 flex gap-2">
+                    <input type="text" id="chatInputMessage" required placeholder="Type your message here..." 
+                        class="flex-grow bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
+                    <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold px-4 py-2 rounded-lg text-xs transition">
+                        Send 🚀
+                    </button>
+                </form>
             </div>
 
         </div>
@@ -309,17 +404,64 @@
     </main>
 
     <!-- Modals -->
+    <!-- Updated Plan Modal with Numbered Visiting Places -->
+    <div id="planModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50 px-4">
+        <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-lg font-semibold text-cyan-400">📅 Add Trip Day Plan</h3>
+            <form id="planForm" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-gray-400 mb-1">Destination Location (e.g. Ooty / Vagamon)</label>
+                    <input type="text" id="planDestination" required placeholder="Ooty" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-gray-400 mb-1">Date</label>
+                        <input type="date" id="planDate" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-2 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Time (Optional)</label>
+                        <div class="flex gap-1">
+                            <input type="time" id="planTime" class="w-2/3 bg-gray-700 border border-gray-600 rounded-lg px-1 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
+                            <select id="planAmPm" class="w-1/3 bg-gray-700 border border-gray-600 rounded-lg px-1 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Boarding / Pickup Place</label>
+                    <input type="text" id="planBoarding" required placeholder="e.g. Chennai Central" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Visiting Places (Add one by one)</label>
+                    <div class="flex gap-1 mb-2">
+                        <input type="text" id="modalPlaceInput" placeholder="e.g. Pine Forest" class="flex-grow bg-gray-700 border border-gray-600 rounded-lg px-2 py-1 text-white text-xs focus:outline-none focus:border-cyan-400">
+                        <button type="button" onclick="addModalPlace()" class="bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-bold px-3 py-1 rounded-lg text-xs">Add</button>
+                    </div>
+                    <div id="modalPlacesList" class="space-y-1 bg-gray-900/50 p-2 rounded-lg border border-gray-700 max-h-24 overflow-y-auto">
+                        <p class="text-gray-500 italic">No places added yet.</p>
+                    </div>
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button type="submit" class="w-1/2 bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2 rounded-lg transition">Add Date Plan</button>
+                    <button type="button" onclick="openPlanModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg transition">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="editBudgetModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50 px-4">
         <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
-            <h3 class="text-lg font-semibold text-cyan-400">✏️ Edit Per-Person Share</h3>
+            <h3 id="modalEditBudgetTitle" class="text-lg font-semibold text-cyan-400">✏️ Edit Per-Person Share</h3>
             <form id="editBudgetForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1">New Per-Person Share (₹)</label>
+                    <label id="lblNewShare" class="block text-xs text-gray-400 mb-1">New Per-Person Share (₹)</label>
                     <input type="number" id="newShareInput" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
                 </div>
                 <div class="flex gap-2">
-                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition">Save</button>
-                    <button type="button" onclick="toggleEditBudgetModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition">Cancel</button>
+                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition" data-en="Save" data-ta="சேமி">Save</button>
+                    <button type="button" onclick="toggleEditBudgetModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition" data-en="Cancel" data-ta="ரத்து">Cancel</button>
                 </div>
             </form>
         </div>
@@ -327,15 +469,15 @@
 
     <div id="editMembersModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50 px-4">
         <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
-            <h3 class="text-lg font-semibold text-cyan-400">✏️ Edit Max Members Limit</h3>
+            <h3 id="modalEditMembersTitle" class="text-lg font-semibold text-cyan-400">✏️ Edit Max Members Limit</h3>
             <form id="editMembersForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1">New Max Members Limit</label>
+                    <label id="lblNewMax" class="block text-xs text-gray-400 mb-1">New Max Members Limit</label>
                     <input type="number" id="newMaxMembersInput" required min="1" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
                 </div>
                 <div class="flex gap-2">
-                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition">Save</button>
-                    <button type="button" onclick="toggleEditMembersModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition">Cancel</button>
+                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition" data-en="Save" data-ta="சேமி">Save</button>
+                    <button type="button" onclick="toggleEditMembersModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition" data-en="Cancel" data-ta="ரத்து">Cancel</button>
                 </div>
             </form>
         </div>
@@ -346,8 +488,8 @@
             <h3 id="qrModalTitle" class="text-lg font-semibold text-cyan-400">💳 Admin UPI QR Code</h3>
             <p id="modalUpiText" class="text-xs text-gray-300 font-mono"></p>
             <div id="qrcode" class="bg-white p-4 rounded-xl inline-block mx-auto flex justify-center items-center"></div>
-            <p class="text-xs text-gray-400">Scan this QR code to pay money.</p>
-            <button onclick="toggleQrModal()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 rounded-lg transition">
+            <p id="qrSubText" class="text-xs text-gray-400">Scan this QR code to pay money.</p>
+            <button onclick="toggleQrModal()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 rounded-lg transition" data-en="Close" data-ta="மூடு">
                 Close
             </button>
         </div>
@@ -355,10 +497,10 @@
 
     <div id="settlementModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex justify-center items-center z-50 px-4">
         <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-2xl w-full text-center space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <h3 class="text-xl font-bold text-cyan-400">🏁 Trip Final Settlement Report</h3>
-            <p class="text-xs text-gray-400">Individual contribution and final calculation breakdown based on actual expenses:</p>
+            <h3 id="settleModalTitle" class="text-xl font-bold text-cyan-400">🏁 Trip Final Settlement Report</h3>
+            <p id="settleModalSub" class="text-xs text-gray-400">Individual contribution and final calculation breakdown based on actual expenses:</p>
             <div id="settlementContent" class="space-y-3 text-left"></div>
-            <button onclick="toggleSettlementModal()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 rounded-lg transition">
+            <button onclick="toggleSettlementModal()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 rounded-lg transition" data-en="Close" data-ta="மூடு">
                 Close
             </button>
         </div>
@@ -366,10 +508,100 @@
 
     <!-- JavaScript -->
     <script>
+        let currentLang = 'en';
+        let temporaryVisitingPlaces = [];
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ta' : 'en';
+            document.getElementById('langBtnText').innerText = currentLang === 'en' ? 'தமிழ்' : 'English';
+            updateLanguageUI();
+        }
+
+        function updateLanguageUI() {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerText = el.getAttribute(`data-${currentLang}`);
+            });
+
+            if (currentLang === 'ta') {
+                document.getElementById('appTitle').innerText = "🚀 DKV ட்ரிப் மேனேஜர்";
+                document.getElementById('authHeading').innerText = "ட்ரிப் மேனேஜர்";
+                document.getElementById('authSubheading').innerText = "புதிய ட்ரிப் தொடங்குங்கள் அல்லது நண்பர்களின் ரூமில் இணையுங்கள்";
+                document.getElementById('recentTripsHeading').innerText = "📂 உங்களது ட்ரிப்கள்";
+                document.getElementById('adminPayTitle').innerText = "💵 மெம்பர் பங்குத் தொகை பெற (Admin)";
+                document.getElementById('lblMemberSelect').innerText = "உறுப்பினர் பெயர்";
+                document.getElementById('lblPaidAmount').innerText = "கொடுத்த தொகை (₹)";
+                document.getElementById('pendingReqTitle').innerText = "🔔 ஜாயின் கோரிக்கைகள்";
+                document.getElementById('noReqText').innerText = "புதிய கோரிக்கைகள் எதுவும் இல்லை.";
+                document.getElementById('addExpenseTitle').innerText = "💸 செலவு பதிவு செய்ய";
+                document.getElementById('lblSpenderName').innerText = "செலவு செய்தவர் பெயர்";
+                document.getElementById('lblExpenseReason').innerText = "செலவு விவரம்";
+                document.getElementById('lblExpenseAmount').innerText = "தொகை (₹)";
+                document.getElementById('membersListTitle').innerText = "👥 உறுப்பினர்கள் & பங்களிப்பு";
+                document.getElementById('warningTitle').innerText = "எச்சரிக்கை: பட்ஜெட் எல்லை மீறிவிட்டது!";
+                document.getElementById('warningSub').innerText = "மொத்த செலவு நிர்ணயிக்கப்பட்ட பட்ஜெட்டைத் தாண்டிவிட்டது.";
+                document.getElementById('closedBannerTitle').innerText = "🔒 ட்ரிப் முடிந்துவிட்டது (Memories Mode)";
+                document.getElementById('closedBannerSub').innerText = "இந்த ட்ரிப் முடிவடைந்தது. மெமரிஸாகவும் செட்டில்மென்ட்டாகவும் பார்த்துக்கொள்ளலாம்.";
+                document.getElementById('statMembersLabel').innerText = "நபர்கள் (Joined / Max)";
+                document.getElementById('statBudgetLabel').innerText = "மொத்த பட்ஜெட் (Auto)";
+                document.getElementById('statSpentLabel').innerText = "மொத்த செலவு";
+                document.getElementById('statBalanceLabel').innerText = "மீதி தொகை";
+                document.getElementById('expenseHistoryTitle').innerText = "📋 செலவு பட்டியல்";
+                document.getElementById('thName').innerText = "பெயர்";
+                document.getElementById('thReason').innerText = "விவரம்";
+                document.getElementById('thDate').innerText = "தேதி & நேரம்";
+                document.getElementById('thAmount').innerText = "தொகை";
+                document.getElementById('thAction').innerText = "செயல்";
+                document.getElementById('modalEditBudgetTitle').innerText = "✏️ நபர் பங்களிப்பை மாற்றுக";
+                document.getElementById('lblNewShare').innerText = "ஒரு நபருக்கான பங்குத் தொகை (₹)";
+                document.getElementById('modalEditMembersTitle').innerText = "✏️ நபர்கள் லிமிட்டை மாற்றுக";
+                document.getElementById('lblNewMax').innerText = "புதிய மொத்த நபர்கள் லிமிட்";
+                document.getElementById('qrSubText').innerText = "இந்த கியூஆர் கோடை ஸ்கேன் செய்து பணத்தைச் செலுத்தலாம்.";
+                document.getElementById('settleModalTitle').innerText = "🏁 ட்ரிப் பைனல் செட்டில்மென்ட் அறிக்கை";
+                document.getElementById('settleModalSub').innerText = "ஒவ்வொரு நபரின் பங்களிப்பு மற்றும் இறுதி கணக்கு விவரம்:";
+            } else {
+                document.getElementById('appTitle').innerText = "🚀 DKV Trip Manager";
+                document.getElementById('authHeading').innerText = "Trip Manager";
+                document.getElementById('authSubheading').innerText = "Start a new trip or join your friends' room";
+                document.getElementById('recentTripsHeading').innerText = "📂 Your Joined / Recent Trips";
+                document.getElementById('adminPayTitle').innerText = "💵 Receive Member Share (Admin)";
+                document.getElementById('lblMemberSelect').innerText = "Select Member";
+                document.getElementById('lblPaidAmount').innerText = "Amount Paid (₹)";
+                document.getElementById('pendingReqTitle').innerText = "🔔 Join Requests";
+                document.getElementById('noReqText').innerText = "No pending requests.";
+                document.getElementById('addExpenseTitle').innerText = "💸 Add Expense";
+                document.getElementById('lblSpenderName').innerText = "Spender Name";
+                document.getElementById('lblExpenseReason').innerText = "Expense Reason";
+                document.getElementById('lblExpenseAmount').innerText = "Amount (₹)";
+                document.getElementById('membersListTitle').innerText = "👥 Members & Contributions";
+                document.getElementById('warningTitle').innerText = "Warning: Budget Exceeded!";
+                document.getElementById('warningSub').innerText = "Total expenses have exceeded the total budget.";
+                document.getElementById('closedBannerTitle').innerText = "🔒 Trip Closed & Locked (Memories Mode)";
+                document.getElementById('closedBannerSub').innerText = "This trip has ended. You can view memories and final settlement.";
+                document.getElementById('statMembersLabel').innerText = "Members (Joined / Max)";
+                document.getElementById('statBudgetLabel').innerText = "Total Budget (Auto)";
+                document.getElementById('statSpentLabel').innerText = "Total Expense";
+                document.getElementById('statBalanceLabel').innerText = "Remaining Balance";
+                document.getElementById('expenseHistoryTitle').innerText = "📋 Expense History";
+                document.getElementById('thName').innerText = "Name";
+                document.getElementById('thReason').innerText = "Reason";
+                document.getElementById('thDate').innerText = "Date & Time";
+                document.getElementById('thAmount').innerText = "Amount";
+                document.getElementById('thAction').innerText = "Action";
+                document.getElementById('modalEditBudgetTitle').innerText = "✏️ Edit Per-Person Share";
+                document.getElementById('lblNewShare').innerText = "New Per-Person Share (₹)";
+                document.getElementById('modalEditMembersTitle').innerText = "✏️ Edit Max Members Limit";
+                document.getElementById('lblNewMax').innerText = "New Max Members Limit";
+                document.getElementById('qrSubText').innerText = "Scan this QR code to pay money.";
+                document.getElementById('settleModalTitle').innerText = "🏁 Trip Final Settlement Report";
+                document.getElementById('settleModalSub').innerText = "Individual contribution and final calculation breakdown based on actual expenses:";
+            }
+        }
+
         let tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
         let currentTrip = null;
         let currentUser = { name: "", isAdmin: false };
         let adminRefreshInterval = null;
+        let chatRefreshInterval = null;
 
         window.onload = function() {
             renderRecentTrips();
@@ -397,7 +629,7 @@
             }
         }
 
-        // Admin Create Trip Handler
+        // Admin Create Trip Handler (Simplified)
         document.getElementById('createTripForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -416,6 +648,10 @@
                 adminName: adminNameInput,
                 adminPhone: adminPhoneInput,
                 name: document.getElementById('adminTripName').value,
+                goingRoute: [],
+                returnRoute: [],
+                pickupName: "",
+                pickupMapLink: "",
                 perPersonShare: perPersonShare,
                 budget: calculatedBudget,
                 maxMembers: maxMembers,
@@ -425,19 +661,21 @@
                 members: initialMembers,
                 pendingMembers: [],
                 rejectedMembers: [],
-                expenses: []
+                expenses: [],
+                chats: [],
+                tripPlans: []
             };
 
             tripsDatabase.push(newTrip);
-            saveToStorage();
+            localStorage.setItem('dkv_trips_db', JSON.stringify(tripsDatabase));
 
             currentTrip = newTrip;
             currentUser = { name: adminNameInput, isAdmin: true };
 
             enterDashboard();
-            alert(`🎉 Trip room created!\n\nRoom ID: ${random6Digit}`);
-            this.reset();
             renderRecentTrips();
+            alert(`🎉 Trip room created successfully!\n\nRoom ID: ${random6Digit}`);
+            this.reset();
         });
 
         // Member Join Request Handler
@@ -643,6 +881,16 @@
             document.getElementById('statBudget').innerText = `₹${currentTrip.budget}`;
             document.getElementById('statMembers').innerText = `${currentTrip.members.length} / ${currentTrip.maxMembers}`;
 
+            // Render Pickup Info & Google Maps Link
+            document.getElementById('displayPickupName').innerText = currentTrip.pickupName || "Not specified yet";
+            const mapLinkBtn = document.getElementById('displayPickupMapLink');
+            if (currentTrip.pickupMapLink) {
+                mapLinkBtn.href = currentTrip.pickupMapLink;
+                mapLinkBtn.classList.remove('hidden');
+            } else {
+                mapLinkBtn.classList.add('hidden');
+            }
+
             const driveBtn = document.getElementById('displayDriveLink');
             if(currentTrip.driveUrl) {
                 driveBtn.href = currentTrip.driveUrl;
@@ -661,6 +909,10 @@
             const viewSettlementBtn = document.getElementById('viewSettlementBtn');
             const adminEnableContainer = document.getElementById('adminEnableContainer');
             const thAction = document.getElementById('thAction');
+            const adminPickupCard = document.getElementById('adminPickupCard');
+            const addPlanBtn = document.getElementById('addPlanBtn');
+            const goingInputCont = document.getElementById('goingRouteInputContainer');
+            const returnInputCont = document.getElementById('returnRouteInputContainer');
 
             if (currentTrip.isClosed) {
                 adminPaymentCard.classList.add('hidden');
@@ -671,7 +923,11 @@
                 addExpenseCardContainer.classList.add('hidden');
                 tripClosedBanner.classList.remove('hidden');
                 viewSettlementBtn.classList.remove('hidden');
-                thAction.classList.add('hidden'); // Hide delete action header when closed
+                thAction.classList.add('hidden');
+                adminPickupCard.classList.add('hidden');
+                addPlanBtn.classList.add('hidden');
+                goingInputCont.classList.add('hidden');
+                returnInputCont.classList.add('hidden');
 
                 if (currentUser.isAdmin) {
                     adminEnableContainer.classList.remove('hidden');
@@ -684,7 +940,7 @@
                 tripClosedBanner.classList.add('hidden');
                 viewSettlementBtn.classList.add('hidden');
                 addExpenseCardContainer.classList.remove('hidden');
-                thAction.classList.remove('hidden'); // Show delete action header when active
+                thAction.classList.remove('hidden');
 
                 if (currentUser.isAdmin) {
                     adminPaymentCard.classList.remove('hidden');
@@ -692,6 +948,14 @@
                     editBudgetBtn.classList.remove('hidden');
                     editMembersBtn.classList.remove('hidden');
                     adminRequestsCard.classList.remove('hidden');
+                    adminPickupCard.classList.remove('hidden');
+                    addPlanBtn.classList.remove('hidden');
+                    goingInputCont.classList.remove('hidden');
+                    returnInputCont.classList.remove('hidden');
+                    
+                    document.getElementById('pickupNameInput').value = currentTrip.pickupName || "";
+                    document.getElementById('pickupMapInput').value = currentTrip.pickupMapLink || "";
+
                     populateMemberDropdown();
                     renderPendingRequests();
 
@@ -705,6 +969,10 @@
                     editBudgetBtn.classList.add('hidden');
                     editMembersBtn.classList.add('hidden');
                     adminRequestsCard.classList.add('hidden');
+                    adminPickupCard.classList.add('hidden');
+                    addPlanBtn.classList.add('hidden');
+                    goingInputCont.classList.add('hidden');
+                    returnInputCont.classList.add('hidden');
                     if (adminRefreshInterval) clearInterval(adminRefreshInterval);
                 }
             }
@@ -713,17 +981,313 @@
             renderMembersList();
             renderExpenses();
             updateStats();
+            renderRoutePlaces();
+            renderTripPlans();
+            renderChatMessages();
+
+            if (chatRefreshInterval) clearInterval(chatRefreshInterval);
+            chatRefreshInterval = setInterval(() => {
+                let db = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
+                let t = db.find(x => x.roomId === currentTrip.roomId);
+                if (t && JSON.stringify(t.chats) !== JSON.stringify(currentTrip.chats)) {
+                    currentTrip = t;
+                    renderChatMessages();
+                }
+                if (t && (JSON.stringify(t.goingRoute) !== JSON.stringify(currentTrip.goingRoute) || JSON.stringify(t.returnRoute) !== JSON.stringify(currentTrip.returnRoute) || t.pickupName !== currentTrip.pickupName || t.pickupMapLink !== currentTrip.pickupMapLink || JSON.stringify(t.tripPlans) !== JSON.stringify(currentTrip.tripPlans))) {
+                    currentTrip = t;
+                    document.getElementById('displayPickupName').innerText = currentTrip.pickupName || "Not specified yet";
+                    if (currentTrip.pickupMapLink) {
+                        mapLinkBtn.href = currentTrip.pickupMapLink;
+                        mapLinkBtn.classList.remove('hidden');
+                    } else {
+                        mapLinkBtn.classList.add('hidden');
+                    }
+                    renderRoutePlaces();
+                    renderTripPlans();
+                }
+            }, 2000);
         }
 
-        function enableTripAgain() {
-            if (!currentUser.isAdmin) return;
-            if (!confirm("Are you sure you want to re-enable/unlock this trip for edits and new expenses?")) return;
+        // Save Pickup Info & Maps Link (Admin only)
+        document.getElementById('pickupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
 
-            currentTrip.isClosed = false;
+            currentTrip.pickupName = document.getElementById('pickupNameInput').value.trim();
+            currentTrip.pickupMapLink = document.getElementById('pickupMapInput').value.trim();
+            saveToStorage();
+
+            document.getElementById('displayPickupName').innerText = currentTrip.pickupName || "Not specified yet";
+            const mapLinkBtn = document.getElementById('displayPickupMapLink');
+            if (currentTrip.pickupMapLink) {
+                mapLinkBtn.href = currentTrip.pickupMapLink;
+                mapLinkBtn.classList.remove('hidden');
+            } else {
+                mapLinkBtn.classList.add('hidden');
+            }
+            alert("Pickup location and map link updated successfully!");
+        });
+
+        // Add Place to Route (Going or Return)
+        function addRoutePlace(type) {
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
+
+            const inputElem = type === 'going' ? document.getElementById('goingPlaceInput') : document.getElementById('returnPlaceInput');
+            const placeName = inputElem.value.trim();
+            if (!placeName) return;
+
+            if (type === 'going') {
+                if (!currentTrip.goingRoute) currentTrip.goingRoute = [];
+                currentTrip.goingRoute.push(placeName);
+            } else {
+                if (!currentTrip.returnRoute) currentTrip.returnRoute = [];
+                currentTrip.returnRoute.push(placeName);
+            }
+
+            saveToStorage();
+            renderRoutePlaces();
+            inputElem.value = "";
+        }
+
+        function deleteRoutePlace(type, index) {
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
+
+            if (type === 'going') {
+                currentTrip.goingRoute.splice(index, 1);
+            } else {
+                currentTrip.returnRoute.splice(index, 1);
+            }
+
+            saveToStorage();
+            renderRoutePlaces();
+        }
+
+        function renderRoutePlaces() {
+            // Render Going Route List (Vertical with down arrow)
+            const goingContainer = document.getElementById('goingRouteList');
+            if (!currentTrip.goingRoute || currentTrip.goingRoute.length === 0) {
+                goingContainer.innerHTML = `<p class="text-gray-500 italic">No places added yet.</p>`;
+            } else {
+                goingContainer.innerHTML = "";
+                currentTrip.goingRoute.forEach((place, index) => {
+                    let delBtn = (currentUser.isAdmin && !currentTrip.isClosed) ? `<button onclick="deleteRoutePlace('going', ${index})" class="text-rose-400 hover:text-rose-300 font-bold ml-2">×</button>` : '';
+                    let arrowHtml = index < currentTrip.goingRoute.length - 1 ? `<div class="text-cyan-400 font-bold my-0.5 text-center">&darr;</div>` : '';
+
+                    const div = document.createElement('div');
+                    div.className = "flex flex-col items-center";
+                    div.innerHTML = `
+                        <div class="w-full bg-gray-800 text-white px-3 py-1.5 rounded-lg border border-gray-700 text-xs flex justify-between items-center shadow">
+                            <span>${place}</span>
+                            <div>${delBtn}</div>
+                        </div>
+                        ${arrowHtml}
+                    `;
+                    goingContainer.appendChild(div);
+                });
+            }
+
+            // Render Return Route List (Vertical with down arrow)
+            const returnContainer = document.getElementById('returnRouteList');
+            if (!currentTrip.returnRoute || currentTrip.returnRoute.length === 0) {
+                returnContainer.innerHTML = `<p class="text-gray-500 italic">No places added yet.</p>`;
+            } else {
+                returnContainer.innerHTML = "";
+                currentTrip.returnRoute.forEach((place, index) => {
+                    let delBtn = (currentUser.isAdmin && !currentTrip.isClosed) ? `<button onclick="deleteRoutePlace('return', ${index})" class="text-rose-400 hover:text-rose-300 font-bold ml-2">×</button>` : '';
+                    let arrowHtml = index < currentTrip.returnRoute.length - 1 ? `<div class="text-amber-400 font-bold my-0.5 text-center">&darr;</div>` : '';
+
+                    const div = document.createElement('div');
+                    div.className = "flex flex-col items-center";
+                    div.innerHTML = `
+                        <div class="w-full bg-gray-800 text-white px-3 py-1.5 rounded-lg border border-gray-700 text-xs flex justify-between items-center shadow">
+                            <span>${place}</span>
+                            <div>${delBtn}</div>
+                        </div>
+                        ${arrowHtml}
+                    `;
+                    returnContainer.appendChild(div);
+                });
+            }
+        }
+
+        // Modal Visiting Places Handler (Dynamic Numbered List)
+        function openPlanModal() {
+            if (!currentUser.isAdmin) return;
+            temporaryVisitingPlaces = [];
+            renderModalPlacesList();
+            document.getElementById('planModal').classList.toggle('hidden');
+        }
+
+        function addModalPlace() {
+            const input = document.getElementById('modalPlaceInput');
+            const val = input.value.trim();
+            if (!val) return;
+            temporaryVisitingPlaces.push(val);
+            input.value = "";
+            renderModalPlacesList();
+        }
+
+        function removeModalPlace(index) {
+            temporaryVisitingPlaces.splice(index, 1);
+            renderModalPlacesList();
+        }
+
+        function renderModalPlacesList() {
+            const container = document.getElementById('modalPlacesList');
+            if (temporaryVisitingPlaces.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 italic">No places added yet.</p>`;
+                return;
+            }
+            container.innerHTML = "";
+            temporaryVisitingPlaces.forEach((place, idx) => {
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center bg-gray-800 px-2 py-1 rounded text-xs text-white";
+                div.innerHTML = `
+                    <span>${idx + 1}. ${place}</span>
+                    <button type="button" onclick="removeModalPlace(${idx})" class="text-rose-400 font-bold">×</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        document.getElementById('planForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
+
+            const destination = document.getElementById('planDestination').value.trim();
+            const date = document.getElementById('planDate').value;
+            const rawTime = document.getElementById('planTime').value;
+            const ampm = document.getElementById('planAmPm').value;
+            const timeStr = rawTime ? `${rawTime} ${ampm}` : "Time not set";
+            const boarding = document.getElementById('planBoarding').value.trim();
+
+            if (temporaryVisitingPlaces.length === 0) {
+                alert("Please add at least one visiting place!");
+                return;
+            }
+
+            if (!currentTrip.tripPlans) currentTrip.tripPlans = [];
+            currentTrip.tripPlans.push({ 
+                destination, 
+                date, 
+                timeStr, 
+                boarding, 
+                places: [...temporaryVisitingPlaces] 
+            });
+            saveToStorage();
+
+            renderTripPlans();
+            openPlanModal();
+            this.reset();
+        });
+
+        function renderTripPlans() {
+            const container = document.getElementById('tripPlanListContainer');
+            if (!currentTrip.tripPlans || currentTrip.tripPlans.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 italic">No day plans added yet.</p>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            currentTrip.tripPlans.forEach((item, index) => {
+                let deleteBtn = (currentUser.isAdmin && !currentTrip.isClosed) ? `<button onclick="deleteTripPlan(${index})" class="text-rose-400 hover:text-rose-300 font-bold ml-2">×</button>` : '';
+
+                let placesNumberedHtml = "";
+                if (Array.isArray(item.places)) {
+                    item.places.forEach((p, idx) => {
+                        placesNumberedHtml += `<div class="ml-3 text-white">• ${idx + 1}. ${p}</div>`;
+                    });
+                } else {
+                    placesNumberedHtml = `<div class="ml-3 text-white">${item.places}</div>`;
+                }
+
+                const div = document.createElement('div');
+                div.className = "bg-gray-900/60 p-3 rounded-xl border border-gray-700 space-y-1.5";
+                div.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-cyan-300 font-bold text-sm">📍 Destination: ${item.destination}</span>
+                        <div>${deleteBtn}</div>
+                    </div>
+                    <div class="text-xs text-amber-300 flex justify-between">
+                        <span>📅 Date: ${item.date} (${item.timeStr})</span>
+                    </div>
+                    <div class="text-xs text-gray-300">🚍 <strong>Boarding:</strong> ${item.boarding}</div>
+                    <div class="text-xs text-gray-200 mt-1">✨ <strong>Visiting Places:</strong></div>
+                    ${placesNumberedHtml}
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteTripPlan(index) {
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
+            currentTrip.tripPlans.splice(index, 1);
+            saveToStorage();
+            renderTripPlans();
+        }
+
+        // Remove Member Handler (Admin only)
+        function removeMember(memberName) {
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
+            if (memberName === currentTrip.adminName) {
+                alert("Cannot remove the admin!");
+                return;
+            }
+            if (!confirm(`Are you sure you want to remove ${memberName} from this trip?`)) return;
+
+            currentTrip.members = currentTrip.members.filter(m => m.name.toLowerCase() !== memberName.toLowerCase());
             saveToStorage();
             enterDashboard();
-            renderRecentTrips();
-            alert("Trip has been unlocked successfully!");
+            alert(`${memberName} has been removed from the trip.`);
+        }
+
+        // Live Chat Handler
+        document.getElementById('chatForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const msgInput = document.getElementById('chatInputMessage');
+            const msgText = msgInput.value.trim();
+            if (!msgText) return;
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+            if (!currentTrip.chats) currentTrip.chats = [];
+            currentTrip.chats.push({
+                sender: currentUser.name,
+                role: currentUser.isAdmin ? "Admin" : "Member",
+                text: msgText,
+                time: timeStr
+            });
+
+            saveToStorage();
+            renderChatMessages();
+            msgInput.value = "";
+        });
+
+        function renderChatMessages() {
+            const container = document.getElementById('chatMessagesContainer');
+            if (!currentTrip.chats || currentTrip.chats.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 text-center italic">No messages yet. Start the conversation!</p>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            currentTrip.chats.forEach(chat => {
+                const isMe = chat.sender.toLowerCase() === currentUser.name.toLowerCase();
+                const bubble = document.createElement('div');
+                bubble.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'} space-y-0.5`;
+
+                bubble.innerHTML = `
+                    <div class="text-[10px] text-gray-400 px-1 font-medium">
+                        ${chat.sender} (${chat.role}) <span class="text-gray-500 font-mono text-[9px] ml-1">${chat.time}</span>
+                    </div>
+                    <div class="max-w-[80%] p-2.5 rounded-2xl text-xs ${isMe ? 'bg-cyan-600 text-white rounded-br-none' : 'bg-gray-700 text-gray-200 rounded-bl-none'} shadow">
+                        ${chat.text}
+                    </div>
+                `;
+                container.appendChild(bubble);
+            });
+            container.scrollTop = container.scrollHeight;
         }
 
         // Admin Approval Logic
@@ -911,7 +1475,7 @@
             this.reset();
         });
 
-        // Delete Expense Handler (Admin only when active)
+        // Delete Expense Handler
         function deleteExpense(index) {
             if (currentTrip.isClosed || !currentUser.isAdmin) return;
             if (!confirm("Are you sure you want to delete this expense?")) return;
@@ -924,7 +1488,7 @@
             alert("Expense deleted successfully!");
         }
 
-        // Trigger Trip Settlement & Split-up calculation (Based on Actual Total Spent divided by total members)
+        // Trigger Trip Settlement & Split-up calculation
         function triggerTripSettlement() {
             if (currentUser.isAdmin && !currentTrip.isClosed) {
                 if (!confirm("Are you sure you want to end this trip? No further expenses can be added after locking.")) {
@@ -985,7 +1549,7 @@
             document.getElementById('settlementModal').classList.toggle('hidden');
         }
 
-        // Render Members List using actual spent divided by members
+        // Render Members List with Remove Member option for Admin
         function renderMembersList() {
             const listContainer = document.getElementById('membersListContainer');
             listContainer.innerHTML = "";
@@ -1005,9 +1569,12 @@
                     ? `<span class="text-rose-400 font-semibold">Due: ₹${balance.toFixed(2)}</span>` 
                     : (balance < 0 ? `<span class="text-emerald-400 font-semibold">Refund: ₹${Math.abs(balance).toFixed(2)}</span>` : `<span class="text-emerald-400 font-semibold">Settled ✅</span>`);
 
-                let transferBtn = "";
-                if (currentUser.isAdmin && !currentTrip.isClosed && member.role !== "Admin") {
-                    transferBtn = `<button onclick="makeAdmin('${member.name}', '${member.phone}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-0.5 rounded">Make Admin</button>`;
+                let actionBtns = "";
+                if (currentUser.isAdmin && !currentTrip.isClosed) {
+                    if (member.role !== "Admin") {
+                        actionBtns += `<button onclick="makeAdmin('${member.name}', '${member.phone}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-0.5 rounded mr-1">Make Admin</button>`;
+                        actionBtns += `<button onclick="removeMember('${member.name}')" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-0.5 rounded">Remove</button>`;
+                    }
                 }
 
                 const phoneLink = member.phone ? `<a href="tel:${member.phone}" class="text-cyan-400 hover:underline font-mono">📞 ${member.phone}</a>` : `<span class="text-gray-400 font-mono">Admin</span>`;
@@ -1018,7 +1585,7 @@
                             <span class="font-bold text-white text-sm">${member.name}</span>
                             <span class="text-gray-400 text-[10px] ml-1">(${member.role})</span>
                         </div>
-                        <div>${transferBtn}</div>
+                        <div class="flex items-center">${actionBtns}</div>
                     </div>
                     <div class="flex justify-between items-center text-gray-300">
                         <span>${phoneLink}</span>
@@ -1057,6 +1624,7 @@
 
         function logoutTrip() {
             if (adminRefreshInterval) clearInterval(adminRefreshInterval);
+            if (chatRefreshInterval) clearInterval(chatRefreshInterval);
             document.getElementById('dashboardView').classList.add('hidden');
             document.getElementById('authView').classList.remove('hidden');
             document.getElementById('roomStatusBadge').classList.add('hidden');

@@ -18,14 +18,10 @@
     <!-- Header / Navbar -->
     <header class="bg-gray-800 border-b border-gray-700 shadow-md">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 id="appTitle" class="text-2xl font-bold text-cyan-400 tracking-wider">🚀 DKV Trip Manager</h1>
+            <h1 class="text-2xl font-bold text-cyan-400 tracking-wider">🚀 DKV Trip Manager</h1>
             <div class="flex items-center gap-3">
-                <!-- Language Toggle Button -->
-                <button onclick="toggleLanguage()" class="bg-gray-700 hover:bg-gray-600 text-cyan-300 border border-cyan-500/50 text-xs px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5">
-                    🌐 <span id="langBtnText">தமிழ்</span>
-                </button>
                 <span id="roomStatusBadge" class="text-xs bg-rose-900 text-rose-300 px-3 py-1 rounded-full font-medium hidden">Room Active</span>
-                <button id="logoutBtn" onclick="logoutTrip()" class="hidden bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-medium" data-en="Logout" data-ta="வெளியேறு">Logout</button>
+                <button id="logoutBtn" onclick="logoutTrip()" class="hidden bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-medium">Logout</button>
             </div>
         </div>
     </header>
@@ -34,59 +30,59 @@
     <main id="authView" class="flex-grow flex flex-col items-center justify-center px-4 py-12 space-y-8">
         <div class="max-w-md w-full bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700">
             <div class="text-center mb-6">
-                <h2 id="authHeading" class="text-2xl font-bold text-cyan-400">Trip Manager</h2>
-                <p id="authSubheading" class="text-xs text-gray-400 mt-1">Start a new trip or join your friends' room</p>
+                <h2 class="text-2xl font-bold text-cyan-400">Trip Manager</h2>
+                <p class="text-xs text-gray-400 mt-1">Start a new trip or join your friends' room</p>
             </div>
 
             <!-- Tabs -->
             <div id="authTabs" class="flex border-b border-gray-700 mb-6">
-                <button id="tabCreateBtn" onclick="switchAuthTab('create')" class="w-1/2 pb-2 font-semibold text-cyan-400 border-b-2 border-cyan-400 text-sm transition" data-en="Admin (Create)" data-ta="அட்மின் (Create)">Admin (Create)</button>
-                <button id="tabJoinBtn" onclick="switchAuthTab('join')" class="w-1/2 pb-2 font-semibold text-gray-400 text-sm transition" data-en="Members (Join)" data-ta="நண்பர்கள் (Join)">Members (Join)</button>
+                <button id="tabCreateBtn" onclick="switchAuthTab('create')" class="w-1/2 pb-2 font-semibold text-cyan-400 border-b-2 border-cyan-400 text-sm transition">Admin (Create)</button>
+                <button id="tabJoinBtn" onclick="switchAuthTab('join')" class="w-1/2 pb-2 font-semibold text-gray-400 text-sm transition">Members (Join)</button>
             </div>
 
             <!-- Create Trip Form (Admin) -->
             <form id="createTripForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Admin Name" data-ta="அட்மின் பெயர்">Admin Name</label>
+                    <label class="block text-sm text-gray-400 mb-1">Admin Name</label>
                     <input type="text" id="adminName" required placeholder="e.g. Velkumudhan" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Admin Phone Number" data-ta="அட்மின் போன் நம்பர்">Admin Phone Number</label>
+                    <label class="block text-sm text-gray-400 mb-1">Admin Phone Number</label>
                     <input type="tel" id="adminPhone" required placeholder="9876543210" maxlength="10" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Trip Name" data-ta="ட்ரிப் பெயர்">Trip Name</label>
+                    <label class="block text-sm text-gray-400 mb-1">Trip Name</label>
                     <input type="text" id="adminTripName" required placeholder="e.g. Ooty Trip" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Per Person Share (₹)" data-ta="ஒரு நபருக்கான பங்குத் தொகை (₹)">Per Person Share (₹)</label>
+                    <label class="block text-sm text-gray-400 mb-1">Per Person Share (₹)</label>
                     <input type="number" id="adminPerPersonShare" required placeholder="1000" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Max Members Limit" data-ta="மொத்த நபர்கள் லிமிட்">Max Members Limit</label>
+                    <label class="block text-sm text-gray-400 mb-1">Max Members Limit</label>
                     <input type="number" id="adminMaxMembers" required min="1" placeholder="e.g. 5" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Admin UPI ID (e.g. name@oksbi)" data-ta="அட்மின் UPI ID (எ.கா: name@oksbi)">Admin UPI ID (e.g. name@oksbi)</label>
+                    <label class="block text-sm text-gray-400 mb-1">Admin UPI ID (e.g. name@oksbi)</label>
                     <input type="text" id="adminUpiId" required placeholder="velku@oksbi" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Google Drive Photos Link" data-ta="Google Drive போட்டோஸ் லிங்க்">Google Drive Photos Link</label>
+                    <label class="block text-sm text-gray-400 mb-1">Google Drive Photos Link</label>
                     <input type="url" id="adminDriveLink" placeholder="https://drive.google.com/..." 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Set Room Password" data-ta="பாஸ்வேர்ட் செட் செய்">Set Room Password</label>
+                    <label class="block text-sm text-gray-400 mb-1">Set Room Password</label>
                     <input type="password" id="adminPassword" required placeholder="Password for members" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
-                <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg" data-en="Create Trip Room" data-ta="ட்ரிப் ரூம் உருவாக்கு">
+                <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg">
                     Create Trip Room
                 </button>
             </form>
@@ -94,37 +90,36 @@
             <!-- Join Trip Form (Members) -->
             <form id="joinTripForm" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Your Name" data-ta="உங்கள் பெயர்">Your Name</label>
+                    <label class="block text-sm text-gray-400 mb-1">Your Name</label>
                     <input type="text" id="joinMemberName" required placeholder="e.g. Arun" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Phone Number" data-ta="போன் நம்பர்">Phone Number</label>
+                    <label class="block text-sm text-gray-400 mb-1">Phone Number</label>
                     <input type="tel" id="joinMemberPhone" required placeholder="9876543210" maxlength="10" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="6-Digit Room ID" data-ta="ரூம் ஐடி (6-Digit Room ID)">6-Digit Room ID</label>
+                    <label class="block text-sm text-gray-400 mb-1">6-Digit Room ID</label>
                     <input type="text" id="joinRoomId" required maxlength="6" placeholder="e.g. 482910" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1" data-en="Password" data-ta="பாஸ்வேர்ட்">Password</label>
+                    <label class="block text-sm text-gray-400 mb-1">Password</label>
                     <input type="password" id="joinPassword" required placeholder="Room Password" 
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                 </div>
-                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg" data-en="Request Join Room" data-ta="ரூமுக்கு நுழைவு கோரு">
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2.5 rounded-lg transition duration-200 shadow-lg">
                     Request Join Room
                 </button>
             </form>
 
-            <!-- Inline Success / Status Banner -->
             <div id="joinStatusBanner" class="mt-4 p-4 rounded-xl border hidden text-xs leading-relaxed space-y-2"></div>
         </div>
 
         <!-- Recent Trips -->
         <div id="recentTripsContainer" class="max-w-md w-full bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 hidden">
-            <h3 id="recentTripsHeading" class="text-md font-semibold text-cyan-400 mb-3 flex items-center gap-2">
+            <h3 class="text-md font-semibold text-cyan-400 mb-3 flex items-center gap-2">
                 📂 Your Joined / Recent Trips
             </h3>
             <div id="recentTripsList" class="space-y-3"></div>
@@ -140,19 +135,19 @@
             
             <!-- Admin Contribution Input Card -->
             <div id="adminPaymentCard" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700 hidden">
-                <h2 id="adminPayTitle" class="text-md font-semibold text-cyan-400 mb-3">💵 Receive Member Share (Admin)</h2>
+                <h2 class="text-md font-semibold text-cyan-400 mb-3">💵 Receive Member Share (Admin)</h2>
                 <form id="adminPaymentForm" class="space-y-3">
                     <div>
-                        <label id="lblMemberSelect" class="block text-xs text-gray-400 mb-1">Select Member</label>
+                        <label class="block text-xs text-gray-400 mb-1">Select Member</label>
                         <select id="paymentMemberSelect" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
                         </select>
                     </div>
                     <div>
-                        <label id="lblPaidAmount" class="block text-xs text-gray-400 mb-1">Amount Paid (₹)</label>
+                        <label class="block text-xs text-gray-400 mb-1">Amount Paid (₹)</label>
                         <input type="number" id="paymentAmount" required placeholder="500" 
                             class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
                     </div>
-                    <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition" data-en="Save Payment" data-ta="பணம் பெற்றதை சேமி">
+                    <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition">
                         Save Payment
                     </button>
                 </form>
@@ -161,34 +156,34 @@
             <!-- Admin Pending Requests Card -->
             <div id="adminRequestsCard" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700 hidden">
                 <div class="flex justify-between items-center mb-3">
-                    <h3 id="pendingReqTitle" class="text-md font-semibold text-amber-400">🔔 Join Requests</h3>
+                    <h3 class="text-md font-semibold text-amber-400">🔔 Join Requests</h3>
                     <button onclick="renderPendingRequests()" class="text-xs bg-gray-700 hover:bg-gray-600 text-cyan-300 px-2 py-1 rounded transition">🔄 Refresh</button>
                 </div>
                 <div id="pendingRequestsContainer" class="space-y-2 text-xs">
-                    <p id="noReqText" class="text-gray-400">No pending requests.</p>
+                    <p class="text-gray-400">No pending requests.</p>
                 </div>
             </div>
 
             <!-- Add Expense Card -->
-            <div class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700">
-                <h2 id="addExpenseTitle" class="text-lg font-semibold text-cyan-400 mb-4">💸 Add Expense</h2>
+            <div id="addExpenseCardContainer" class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700">
+                <h2 class="text-lg font-semibold text-cyan-400 mb-4">💸 Add Expense</h2>
                 <form id="expenseForm" class="space-y-4">
                     <div>
-                        <label id="lblSpenderName" class="block text-sm text-gray-400 mb-1">Spender Name</label>
+                        <label class="block text-sm text-gray-400 mb-1">Spender Name</label>
                         <input type="text" id="spenderName" required placeholder="e.g. Velku" 
                             class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                     </div>
                     <div>
-                        <label id="lblExpenseReason" class="block text-sm text-gray-400 mb-1">Expense Reason</label>
+                        <label class="block text-sm text-gray-400 mb-1">Expense Reason</label>
                         <input type="text" id="expenseReason" required placeholder="e.g. Food / Petrol" 
                             class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                     </div>
                     <div>
-                        <label id="lblExpenseAmount" class="block text-sm text-gray-400 mb-1">Amount (₹)</label>
+                        <label class="block text-sm text-gray-400 mb-1">Amount (₹)</label>
                         <input type="number" id="expenseAmount" required placeholder="500" 
                             class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
                     </div>
-                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2 rounded-lg transition duration-200" data-en="Add Expense" data-ta="செலவை சேர்">
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-900 font-semibold py-2 rounded-lg transition duration-200">
                         Add Expense
                     </button>
                 </form>
@@ -196,8 +191,8 @@
 
             <!-- Members List & Contribution Tracker -->
             <div class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-gray-700">
-                <h3 id="membersListTitle" class="text-md font-semibold text-cyan-400 mb-3">👥 Members & Contributions</h3>
-                <div class="text-xs text-gray-400 mb-3"><span data-en="Per Person Share: " data-ta="பங்குத் தொகை: ">Per Person Share: </span><span id="displayShareAmount" class="text-cyan-300 font-bold">₹0</span></div>
+                <h3 class="text-md font-semibold text-cyan-400 mb-3">👥 Members & Contributions</h3>
+                <div class="text-xs text-gray-400 mb-3">Per Person Share: <span id="displayShareAmount" class="text-cyan-300 font-bold">₹0</span></div>
                 <ul id="membersListContainer" class="space-y-3 text-sm text-gray-300">
                 </ul>
             </div>
@@ -206,12 +201,28 @@
         <!-- Right Column -->
         <div class="md:col-span-2 space-y-6">
 
+            <!-- Trip Closed Notice Banner -->
+            <div id="tripClosedBanner" class="bg-indigo-900 border border-indigo-700 text-indigo-200 px-4 py-3 rounded-2xl shadow-lg hidden flex justify-between items-center gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🔒</span>
+                    <div>
+                        <h4 class="font-bold text-sm">Trip Closed & Locked (Memories Mode)</h4>
+                        <p class="text-xs text-indigo-300">This trip has ended. You can view memories and final settlement.</p>
+                    </div>
+                </div>
+                <div id="adminEnableContainer" class="hidden">
+                    <button onclick="enableTripAgain()" class="bg-cyan-500 hover:bg-cyan-600 text-gray-900 text-xs font-bold px-3 py-2 rounded-lg transition shadow-md whitespace-nowrap">
+                        🔓 Enable Trip
+                    </button>
+                </div>
+            </div>
+
             <!-- Budget Warning Banner -->
             <div id="budgetWarningBanner" class="bg-rose-900 border border-rose-700 text-rose-200 px-4 py-3 rounded-2xl shadow-lg hidden flex items-center gap-3 animate-pulse">
                 <span class="text-2xl">⚠️</span>
                 <div>
-                    <h4 id="warningTitle" class="font-bold text-sm">Warning: Budget Exceeded!</h4>
-                    <p id="warningSub" class="text-xs text-rose-300">Total expenses have exceeded the total budget.</p>
+                    <h4 class="font-bold text-sm">Warning: Budget Exceeded!</h4>
+                    <p class="text-xs text-rose-300">Total expenses have exceeded the total budget.</p>
                 </div>
             </div>
 
@@ -224,12 +235,15 @@
                         <p id="displayAdminText" class="text-xs text-amber-300 mt-1 font-medium">Admin: -</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="toggleQrModal()" class="bg-cyan-600 hover:bg-cyan-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2" data-en="💳 UPI QR Code" data-ta="💳 UPI QR Code">
+                        <button onclick="toggleQrModal()" class="bg-cyan-600 hover:bg-cyan-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2">
                             💳 UPI QR Code
                         </button>
-                        <a id="displayDriveLink" href="#" target="_blank" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2" data-en="📁 Photos" data-ta="📁 போட்டோஸ்">
+                        <a id="displayDriveLink" href="#" target="_blank" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2">
                             📁 Photos
                         </a>
+                        <button id="viewSettlementBtn" onclick="triggerTripSettlement()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 rounded-lg font-medium transition duration-200 flex items-center gap-2">
+                            📊 View Settlement
+                        </button>
                     </div>
                 </div>
 
@@ -237,20 +251,20 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600 flex justify-between items-start">
                         <div>
-                            <p id="statMembersLabel" class="text-xs text-gray-400">Members (Joined / Max)</p>
+                            <p class="text-xs text-gray-400">Members (Joined / Max)</p>
                             <p id="statMembers" class="text-xl font-bold text-amber-400 mt-1">0 / 0</p>
                         </div>
                         <button id="editMembersBtn" onclick="openEditMembersModal()" class="hidden bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-2 py-1 rounded font-medium transition">✏️ Edit</button>
                     </div>
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600 flex justify-between items-start">
                         <div>
-                            <p id="statBudgetLabel" class="text-xs text-gray-400">Total Budget (Auto)</p>
+                            <p class="text-xs text-gray-400">Total Budget (Auto)</p>
                             <p id="statBudget" class="text-xl font-bold text-cyan-400 mt-1">₹0</p>
                         </div>
                         <button id="editBudgetBtn" onclick="openEditBudgetModal()" class="hidden bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-2 py-1 rounded font-medium transition">✏️ Edit Share</button>
                     </div>
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600">
-                        <p id="statSpentLabel" class="text-xs text-gray-400">Total Expense</p>
+                        <p class="text-xs text-gray-400">Total Expense</p>
                         <p id="statSpent" class="text-xl font-bold text-rose-400 mt-1">₹0</p>
                     </div>
                     <div class="bg-gray-700 p-4 rounded-xl border border-gray-600">
@@ -261,7 +275,7 @@
 
                 <!-- Admin Trip End / Settlement Button -->
                 <div id="adminTripEndSection" class="mt-6 pt-4 border-t border-gray-700 hidden">
-                    <button onclick="triggerTripSettlement()" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2" data-en="🏁 Trip End & Settlement (Split-up)" data-ta="🏁 ட்ரிப் முடிவு & செட்டில்மென்ட்">
+                    <button onclick="triggerTripSettlement()" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2">
                         🏁 Trip End & Settlement (Split-up)
                     </button>
                 </div>
@@ -269,20 +283,21 @@
 
             <!-- Expense History Table -->
             <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
-                <h3 id="expenseHistoryTitle" class="text-lg font-semibold text-cyan-400 mb-4">📋 Expense History</h3>
+                <h3 class="text-lg font-semibold text-cyan-400 mb-4">📋 Expense History</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="border-b border-gray-700 text-gray-400 text-sm">
-                                <th id="thName" class="py-3 px-4">Name</th>
-                                <th id="thReason" class="py-3 px-4">Reason</th>
-                                <th id="thDate" class="py-3 px-4">Date & Time</th>
-                                <th id="thAmount" class="py-3 px-4 text-right">Amount</th>
+                                <th class="py-3 px-4">Name</th>
+                                <th class="py-3 px-4">Reason</th>
+                                <th class="py-3 px-4">Date & Time</th>
+                                <th class="py-3 px-4 text-right">Amount</th>
+                                <th id="thAction" class="py-3 px-4 text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody id="expenseTableBody" class="divide-y divide-gray-700 text-sm">
                             <tr>
-                                <td colspan="4" class="py-4 text-center text-gray-500" data-en="No expenses added yet." data-ta="இதுவரை செலவுகள் எதுவும் சேர்க்கப்படவில்லை.">No expenses added yet.</td>
+                                <td colspan="5" class="py-4 text-center text-gray-500">No expenses added yet.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -296,15 +311,15 @@
     <!-- Modals -->
     <div id="editBudgetModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50 px-4">
         <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
-            <h3 id="modalEditBudgetTitle" class="text-lg font-semibold text-cyan-400">✏️ Edit Per-Person Share</h3>
+            <h3 class="text-lg font-semibold text-cyan-400">✏️ Edit Per-Person Share</h3>
             <form id="editBudgetForm" class="space-y-4">
                 <div>
-                    <label id="lblNewShare" class="block text-xs text-gray-400 mb-1">New Per-Person Share (₹)</label>
+                    <label class="block text-xs text-gray-400 mb-1">New Per-Person Share (₹)</label>
                     <input type="number" id="newShareInput" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
                 </div>
                 <div class="flex gap-2">
-                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition" data-en="Save" data-ta="சேமி">Save</button>
-                    <button type="button" onclick="toggleEditBudgetModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition" data-en="Cancel" data-ta="ரத்து">Cancel</button>
+                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition">Save</button>
+                    <button type="button" onclick="toggleEditBudgetModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition">Cancel</button>
                 </div>
             </form>
         </div>
@@ -312,15 +327,15 @@
 
     <div id="editMembersModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50 px-4">
         <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
-            <h3 id="modalEditMembersTitle" class="text-lg font-semibold text-cyan-400">✏️ Edit Max Members Limit</h3>
+            <h3 class="text-lg font-semibold text-cyan-400">✏️ Edit Max Members Limit</h3>
             <form id="editMembersForm" class="space-y-4">
                 <div>
-                    <label id="lblNewMax" class="block text-xs text-gray-400 mb-1">New Max Members Limit</label>
+                    <label class="block text-xs text-gray-400 mb-1">New Max Members Limit</label>
                     <input type="number" id="newMaxMembersInput" required min="1" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cyan-400">
                 </div>
                 <div class="flex gap-2">
-                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition" data-en="Save" data-ta="சேமி">Save</button>
-                    <button type="button" onclick="toggleEditMembersModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition" data-en="Cancel" data-ta="ரத்து">Cancel</button>
+                    <button type="submit" class="w-1/2 bg-cyan-500 hover:bg-cyan-600 text-gray-900 font-semibold py-2 rounded-lg text-sm transition">Save</button>
+                    <button type="button" onclick="toggleEditMembersModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg text-sm transition">Cancel</button>
                 </div>
             </form>
         </div>
@@ -331,8 +346,8 @@
             <h3 id="qrModalTitle" class="text-lg font-semibold text-cyan-400">💳 Admin UPI QR Code</h3>
             <p id="modalUpiText" class="text-xs text-gray-300 font-mono"></p>
             <div id="qrcode" class="bg-white p-4 rounded-xl inline-block mx-auto flex justify-center items-center"></div>
-            <p id="qrSubText" class="text-xs text-gray-400">Scan this QR code to pay money.</p>
-            <button onclick="toggleQrModal()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 rounded-lg transition" data-en="Close" data-ta="மூடு">
+            <p class="text-xs text-gray-400">Scan this QR code to pay money.</p>
+            <button onclick="toggleQrModal()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 rounded-lg transition">
                 Close
             </button>
         </div>
@@ -340,10 +355,10 @@
 
     <div id="settlementModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex justify-center items-center z-50 px-4">
         <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl max-w-2xl w-full text-center space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <h3 id="settleModalTitle" class="text-xl font-bold text-cyan-400">🏁 Trip Final Settlement Report</h3>
-            <p id="settleModalSub" class="text-xs text-gray-400">Individual contribution and final calculation breakdown:</p>
+            <h3 class="text-xl font-bold text-cyan-400">🏁 Trip Final Settlement Report</h3>
+            <p class="text-xs text-gray-400">Individual contribution and final calculation breakdown based on actual expenses:</p>
             <div id="settlementContent" class="space-y-3 text-left"></div>
-            <button onclick="toggleSettlementModal()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 rounded-lg transition" data-en="Close" data-ta="மூடு">
+            <button onclick="toggleSettlementModal()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 rounded-lg transition">
                 Close
             </button>
         </div>
@@ -351,90 +366,6 @@
 
     <!-- JavaScript -->
     <script>
-        let currentLang = 'en'; // Default language is English
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'en' ? 'ta' : 'en';
-            document.getElementById('langBtnText').innerText = currentLang === 'en' ? 'தமிழ்' : 'English';
-            updateLanguageUI();
-        }
-
-        function updateLanguageUI() {
-            // Update all elements with data-en and data-ta attributes
-            document.querySelectorAll('[data-en]').forEach(el => {
-                el.innerText = el.getAttribute(`data-${currentLang}`);
-            });
-
-            // Update specific static labels based on currentLang
-            if (currentLang === 'ta') {
-                document.getElementById('appTitle').innerText = "🚀 DKV ட்ரிப் மேனேஜர்";
-                document.getElementById('authHeading').innerText = "ட்ரிப் மேனேஜர்";
-                document.getElementById('authSubheading').innerText = "புதிய ட்ரிப் தொடங்குங்கள் அல்லது நண்பர்களின் ரூமில் இணையுங்கள்";
-                document.getElementById('recentTripsHeading').innerText = "📂 உங்களது ட்ரிப்கள்";
-                document.getElementById('adminPayTitle').innerText = "💵 மெம்பர் பங்குத் தொகை பெற (Admin)";
-                document.getElementById('lblMemberSelect').innerText = "உறுப்பினர் பெயர்";
-                document.getElementById('lblPaidAmount').innerText = "கொடுத்த தொகை (₹)";
-                document.getElementById('pendingReqTitle').innerText = "🔔 ஜாயின் கோரிக்கைகள்";
-                document.getElementById('noReqText').innerText = "புதிய கோரிக்கைகள் எதுவும் இல்லை.";
-                document.getElementById('addExpenseTitle').innerText = "💸 செலவு பதிவு செய்ய";
-                document.getElementById('lblSpenderName').innerText = "செலவு செய்தவர் பெயர்";
-                document.getElementById('lblExpenseReason').innerText = "செலவு விவரம்";
-                document.getElementById('lblExpenseAmount').innerText = "தொகை (₹)";
-                document.getElementById('membersListTitle').innerText = "👥 உறுப்பினர்கள் & பங்களிப்பு";
-                document.getElementById('warningTitle').innerText = "எச்சரிக்கை: பட்ஜெட் எல்லை மீறிவிட்டது!";
-                document.getElementById('warningSub').innerText = "மொத்த செலவு நிர்ணயிக்கப்பட்ட பட்ஜெட்டைத் தாண்டிவிட்டது.";
-                document.getElementById('statMembersLabel').innerText = "நபர்கள் (Joined / Max)";
-                document.getElementById('statBudgetLabel').innerText = "மொத்த பட்ஜெட் (Auto)";
-                document.getElementById('statSpentLabel').innerText = "மொத்த செலவு";
-                document.getElementById('statBalanceLabel').innerText = "மீதி தொகை";
-                document.getElementById('expenseHistoryTitle').innerText = "📋 செலவு பட்டியல்";
-                document.getElementById('thName').innerText = "பெயர்";
-                document.getElementById('thReason').innerText = "விவரம்";
-                document.getElementById('thDate').innerText = "தேதி & நேரம்";
-                document.getElementById('thAmount').innerText = "தொகை";
-                document.getElementById('modalEditBudgetTitle').innerText = "✏️ நபர் பங்களிப்பை மாற்றுக";
-                document.getElementById('lblNewShare').innerText = "ஒரு நபருக்கான பங்குத் தொகை (₹)";
-                document.getElementById('modalEditMembersTitle').innerText = "✏️ நபர்கள் லிமிட்டை மாற்றுக";
-                document.getElementById('lblNewMax').innerText = "புதிய மொத்த நபர்கள் லிமிட்";
-                document.getElementById('qrSubText').innerText = "இந்த கியூஆர் கோடை ஸ்கேன் செய்து பணத்தைச் செலுத்தலாம்.";
-                document.getElementById('settleModalTitle').innerText = "🏁 ட்ரிப் பைனல் செட்டில்மென்ட் அறிக்கை";
-                document.getElementById('settleModalSub').innerText = "ஒவ்வொரு நபரின் பங்களிப்பு மற்றும் இறுதி கணக்கு விவரம்:";
-            } else {
-                document.getElementById('appTitle').innerText = "🚀 DKV Trip Manager";
-                document.getElementById('authHeading').innerText = "Trip Manager";
-                document.getElementById('authSubheading').innerText = "Start a new trip or join your friends' room";
-                document.getElementById('recentTripsHeading').innerText = "📂 Your Joined / Recent Trips";
-                document.getElementById('adminPayTitle').innerText = "💵 Receive Member Share (Admin)";
-                document.getElementById('lblMemberSelect').innerText = "Select Member";
-                document.getElementById('lblPaidAmount').innerText = "Amount Paid (₹)";
-                document.getElementById('pendingReqTitle').innerText = "🔔 Join Requests";
-                document.getElementById('noReqText').innerText = "No pending requests.";
-                document.getElementById('addExpenseTitle').innerText = "💸 Add Expense";
-                document.getElementById('lblSpenderName').innerText = "Spender Name";
-                document.getElementById('lblExpenseReason').innerText = "Expense Reason";
-                document.getElementById('lblExpenseAmount').innerText = "Amount (₹)";
-                document.getElementById('membersListTitle').innerText = "👥 Members & Contributions";
-                document.getElementById('warningTitle').innerText = "Warning: Budget Exceeded!";
-                document.getElementById('warningSub').innerText = "Total expenses have exceeded the total budget.";
-                document.getElementById('statMembersLabel').innerText = "Members (Joined / Max)";
-                document.getElementById('statBudgetLabel').innerText = "Total Budget (Auto)";
-                document.getElementById('statSpentLabel').innerText = "Total Expense";
-                document.getElementById('statBalanceLabel').innerText = "Remaining Balance";
-                document.getElementById('expenseHistoryTitle').innerText = "📋 Expense History";
-                document.getElementById('thName').innerText = "Name";
-                document.getElementById('thReason').innerText = "Reason";
-                document.getElementById('thDate').innerText = "Date & Time";
-                document.getElementById('thAmount').innerText = "Amount";
-                document.getElementById('modalEditBudgetTitle').innerText = "✏️ Edit Per-Person Share";
-                document.getElementById('lblNewShare').innerText = "New Per-Person Share (₹)";
-                document.getElementById('modalEditMembersTitle').innerText = "✏️ Edit Max Members Limit";
-                document.getElementById('lblNewMax').innerText = "New Max Members Limit";
-                document.getElementById('qrSubText').innerText = "Scan this QR code to pay money.";
-                document.getElementById('settleModalTitle').innerText = "🏁 Trip Final Settlement Report";
-                document.getElementById('settleModalSub').innerText = "Individual contribution and final calculation breakdown:";
-            }
-        }
-
         let tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
         let currentTrip = null;
         let currentUser = { name: "", isAdmin: false };
@@ -490,6 +421,7 @@
                 maxMembers: maxMembers,
                 upiId: document.getElementById('adminUpiId').value.trim(),
                 driveUrl: document.getElementById('adminDriveLink').value,
+                isClosed: false,
                 members: initialMembers,
                 pendingMembers: [],
                 rejectedMembers: [],
@@ -532,7 +464,7 @@
 
                     if (foundTrip.rejectedMembers && foundTrip.rejectedMembers.some(m => m.name.toLowerCase() === memberName.toLowerCase())) {
                         statusBanner.className = "mt-4 p-4 rounded-xl border bg-rose-900 border-rose-700 text-rose-200 text-xs leading-relaxed space-y-1";
-                        statusBanner.innerHTML = currentLang === 'ta' ? `<strong>❌ மன்னிக்கவும்!</strong> அட்மின் உங்களது கோரிக்கையை நிராகரித்துவிட்டார்.` : `<strong>❌ Sorry!</strong> Admin has rejected your request.`;
+                        statusBanner.innerHTML = `<strong>❌ Sorry!</strong> Admin has rejected your request.`;
                         statusBanner.classList.remove('hidden');
                         return;
                     }
@@ -546,10 +478,7 @@
                     }
 
                     statusBanner.className = "mt-4 p-4 rounded-xl border bg-emerald-900 border-emerald-700 text-emerald-200 text-xs leading-relaxed space-y-1";
-                    statusBanner.innerHTML = currentLang === 'ta' ? `
-                        <strong>✅ கோரிக்கை வெற்றிகரமாக அனுப்பப்பட்டது!</strong><br>
-                        ${memberName}, அட்மின் ஒப்புதல் அளித்த பிறகு, இந்த பக்கத்தில் உங்களது ட்ரிப் கீழே லிஸ்ட் காமிக்கும். அதை ஒரு கிளிக் செய்து நேராக உள்ளே சென்று கொள்ளலாம்!
-                    ` : `
+                    statusBanner.innerHTML = `
                         <strong>✅ Request sent successfully!</strong><br>
                         ${memberName}, please wait until admin approves. Once approved, your trip will appear below on this page for quick access!
                     `;
@@ -559,12 +488,12 @@
 
                 } else {
                     statusBanner.className = "mt-4 p-4 rounded-xl border bg-rose-900 border-rose-700 text-rose-200 text-xs leading-relaxed space-y-1";
-                    statusBanner.innerHTML = currentLang === 'ta' ? `<strong>❌ தவறு!</strong> பாஸ்வேர்ட் சரியாக இல்லை.` : `<strong>❌ Error!</strong> Incorrect password.`;
+                    statusBanner.innerHTML = `<strong>❌ Error!</strong> Incorrect password.`;
                     statusBanner.classList.remove('hidden');
                 }
             } else {
                 statusBanner.className = "mt-4 p-4 rounded-xl border bg-rose-900 border-rose-700 text-rose-200 text-xs leading-relaxed space-y-1";
-                statusBanner.innerHTML = currentLang === 'ta' ? `<strong>❌ தவறு!</strong> இந்த Room ID கிடைக்கவில்லை.` : `<strong>❌ Error!</strong> Room ID not found.`;
+                statusBanner.innerHTML = `<strong>❌ Error!</strong> Room ID not found.`;
                 statusBanner.classList.remove('hidden');
             }
         });
@@ -603,6 +532,24 @@
             }
         }
 
+        // Private Delete from Local View
+        function deleteRecentTripLocally(event, roomId, memberName = null, isAdmin = false) {
+            event.stopPropagation();
+            if (!confirm("Are you sure you want to remove this trip from your recent list?")) return;
+
+            if (isAdmin) {
+                let createdList = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
+                createdList = createdList.filter(t => t.roomId !== roomId);
+                localStorage.setItem('dkv_trips_db', JSON.stringify(createdList));
+                tripsDatabase = createdList;
+            } else {
+                let joinedList = JSON.parse(localStorage.getItem('dkv_joined_trips')) || [];
+                joinedList = joinedList.filter(j => !(j.roomId === roomId && j.memberName === memberName));
+                localStorage.setItem('dkv_joined_trips', JSON.stringify(joinedList));
+            }
+            renderRecentTrips();
+        }
+
         function renderRecentTrips() {
             tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
             const container = document.getElementById('recentTripsContainer');
@@ -619,18 +566,22 @@
             list.innerHTML = "";
 
             tripsDatabase.forEach(trip => {
+                let lockBadge = trip.isClosed ? ` <span class="text-indigo-400 font-normal">[Closed 🔒]</span>` : '';
                 const div = document.createElement('div');
                 div.className = "flex justify-between items-center bg-gray-700 p-3 rounded-xl border border-gray-600 hover:border-cyan-400 transition cursor-pointer";
                 div.onclick = () => quickAccessTrip(trip.roomId, null, true);
 
                 div.innerHTML = `
                     <div>
-                        <h4 class="font-bold text-white text-sm">👑 ${trip.name} (Admin)</h4>
+                        <h4 class="font-bold text-white text-sm">👑 ${trip.name} (Admin)${lockBadge}</h4>
                         <p class="text-xs text-cyan-300 font-mono">Room ID: ${trip.roomId}</p>
                     </div>
-                    <button class="bg-cyan-500 hover:bg-cyan-600 text-gray-900 text-xs px-3 py-1.5 rounded-lg font-semibold transition">
-                        Enter &rarr;
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="deleteRecentTripLocally(event, '${trip.roomId}', null, true)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-2 py-1.5 rounded-lg font-semibold transition" title="Delete from your list">🗑️</button>
+                        <button class="bg-cyan-500 hover:bg-cyan-600 text-gray-900 text-xs px-3 py-1.5 rounded-lg font-semibold transition">
+                            Enter &rarr;
+                        </button>
+                    </div>
                 `;
                 list.appendChild(div);
             });
@@ -639,6 +590,7 @@
                 const foundTrip = tripsDatabase.find(t => t.roomId === item.roomId);
                 if (foundTrip) {
                     let isApproved = foundTrip.members.some(m => m.name.toLowerCase() === item.memberName.toLowerCase());
+                    let lockBadge = foundTrip.isClosed ? ` <span class="text-indigo-400 font-normal">[Closed 🔒]</span>` : '';
                     let statusText = isApproved ? `<span class="text-emerald-400">Approved ✅</span>` : `<span class="text-amber-400">Waiting... ⏳</span>`;
 
                     const div = document.createElement('div');
@@ -647,12 +599,15 @@
 
                     div.innerHTML = `
                         <div>
-                            <h4 class="font-bold text-white text-sm">👤 ${foundTrip.name} (${item.memberName})</h4>
+                            <h4 class="font-bold text-white text-sm">👤 ${foundTrip.name} (${item.memberName})${lockBadge}</h4>
                             <p class="text-xs text-cyan-300 font-mono">Room ID: ${foundTrip.roomId} | ${statusText}</p>
                         </div>
-                        <button class="bg-emerald-500 hover:bg-emerald-600 text-gray-900 text-xs px-3 py-1.5 rounded-lg font-semibold transition">
-                            Enter &rarr;
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="deleteRecentTripLocally(event, '${foundTrip.roomId}', '${item.memberName}', false)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-2 py-1.5 rounded-lg font-semibold transition" title="Delete from your list">🗑️</button>
+                            <button class="bg-emerald-500 hover:bg-emerald-600 text-gray-900 text-xs px-3 py-1.5 rounded-lg font-semibold transition">
+                                Enter &rarr;
+                            </button>
+                        </div>
                     `;
                     list.appendChild(div);
                 }
@@ -675,7 +630,7 @@
             document.getElementById('dashboardView').classList.remove('hidden');
             
             const statusBadge = document.getElementById('roomStatusBadge');
-            statusBadge.innerText = `Room Active (${currentTrip.roomId})`;
+            statusBadge.innerText = currentTrip.isClosed ? `Trip Closed (${currentTrip.roomId})` : `Room Active (${currentTrip.roomId})`;
             statusBadge.classList.remove('hidden');
             document.getElementById('logoutBtn').classList.remove('hidden');
 
@@ -701,28 +656,57 @@
             const editBudgetBtn = document.getElementById('editBudgetBtn');
             const editMembersBtn = document.getElementById('editMembersBtn');
             const adminRequestsCard = document.getElementById('adminRequestsCard');
+            const addExpenseCardContainer = document.getElementById('addExpenseCardContainer');
+            const tripClosedBanner = document.getElementById('tripClosedBanner');
+            const viewSettlementBtn = document.getElementById('viewSettlementBtn');
+            const adminEnableContainer = document.getElementById('adminEnableContainer');
+            const thAction = document.getElementById('thAction');
 
-            if (currentUser.isAdmin) {
-                adminPaymentCard.classList.remove('hidden');
-                adminTripEndSection.classList.remove('hidden');
-                editBudgetBtn.classList.remove('hidden');
-                editMembersBtn.classList.remove('hidden');
-                adminRequestsCard.classList.remove('hidden');
-                populateMemberDropdown();
-                renderPendingRequests();
-
-                if (adminRefreshInterval) clearInterval(adminRefreshInterval);
-                adminRefreshInterval = setInterval(() => {
-                    renderPendingRequests();
-                }, 3000);
-
-            } else {
+            if (currentTrip.isClosed) {
                 adminPaymentCard.classList.add('hidden');
                 adminTripEndSection.classList.add('hidden');
                 editBudgetBtn.classList.add('hidden');
                 editMembersBtn.classList.add('hidden');
                 adminRequestsCard.classList.add('hidden');
+                addExpenseCardContainer.classList.add('hidden');
+                tripClosedBanner.classList.remove('hidden');
+                viewSettlementBtn.classList.remove('hidden');
+                thAction.classList.add('hidden'); // Hide delete action header when closed
+
+                if (currentUser.isAdmin) {
+                    adminEnableContainer.classList.remove('hidden');
+                } else {
+                    adminEnableContainer.classList.add('hidden');
+                }
+
                 if (adminRefreshInterval) clearInterval(adminRefreshInterval);
+            } else {
+                tripClosedBanner.classList.add('hidden');
+                viewSettlementBtn.classList.add('hidden');
+                addExpenseCardContainer.classList.remove('hidden');
+                thAction.classList.remove('hidden'); // Show delete action header when active
+
+                if (currentUser.isAdmin) {
+                    adminPaymentCard.classList.remove('hidden');
+                    adminTripEndSection.classList.remove('hidden');
+                    editBudgetBtn.classList.remove('hidden');
+                    editMembersBtn.classList.remove('hidden');
+                    adminRequestsCard.classList.remove('hidden');
+                    populateMemberDropdown();
+                    renderPendingRequests();
+
+                    if (adminRefreshInterval) clearInterval(adminRefreshInterval);
+                    adminRefreshInterval = setInterval(() => {
+                        renderPendingRequests();
+                    }, 3000);
+                } else {
+                    adminPaymentCard.classList.add('hidden');
+                    adminTripEndSection.classList.add('hidden');
+                    editBudgetBtn.classList.add('hidden');
+                    editMembersBtn.classList.add('hidden');
+                    adminRequestsCard.classList.add('hidden');
+                    if (adminRefreshInterval) clearInterval(adminRefreshInterval);
+                }
             }
 
             generateQRCode(currentTrip.upiId, currentTrip.adminName);
@@ -731,14 +715,26 @@
             updateStats();
         }
 
+        function enableTripAgain() {
+            if (!currentUser.isAdmin) return;
+            if (!confirm("Are you sure you want to re-enable/unlock this trip for edits and new expenses?")) return;
+
+            currentTrip.isClosed = false;
+            saveToStorage();
+            enterDashboard();
+            renderRecentTrips();
+            alert("Trip has been unlocked successfully!");
+        }
+
         // Admin Approval Logic
         function renderPendingRequests() {
+            if (currentTrip.isClosed) return;
             tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
             currentTrip = tripsDatabase.find(t => t.roomId === currentTrip.roomId) || currentTrip;
 
             const container = document.getElementById('pendingRequestsContainer');
             if (!currentTrip.pendingMembers || currentTrip.pendingMembers.length === 0) {
-                container.innerHTML = `<p class="text-gray-400">${currentLang === 'ta' ? 'புதிய கோரிக்கைகள் எதுவும் இல்லை.' : 'No pending requests.'}</p>`;
+                container.innerHTML = `<p class="text-gray-400">No pending requests.</p>`;
                 return;
             }
 
@@ -752,8 +748,8 @@
                         <p class="text-gray-400 font-mono">${req.phone}</p>
                     </div>
                     <div class="flex gap-1">
-                        <button onclick="approveMember(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded">${currentLang === 'ta' ? 'ஏற்றுக்கொள்' : 'Approve'}</button>
-                        <button onclick="rejectMember(${index})" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded">${currentLang === 'ta' ? 'நிராகரி' : 'Reject'}</button>
+                        <button onclick="approveMember(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded">Approve</button>
+                        <button onclick="rejectMember(${index})" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded">Reject</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -761,6 +757,7 @@
         }
 
         function approveMember(index) {
+            if (currentTrip.isClosed) return;
             tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
             currentTrip = tripsDatabase.find(t => t.roomId === currentTrip.roomId);
 
@@ -782,6 +779,7 @@
         }
 
         function rejectMember(index) {
+            if (currentTrip.isClosed) return;
             tripsDatabase = JSON.parse(localStorage.getItem('dkv_trips_db')) || [];
             currentTrip = tripsDatabase.find(t => t.roomId === currentTrip.roomId);
 
@@ -807,7 +805,7 @@
 
         // Admin Edit Per-Person Share Handler
         function openEditBudgetModal() {
-            if (!currentUser.isAdmin) return;
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
             document.getElementById('newShareInput').value = currentTrip.perPersonShare || 0;
             toggleEditBudgetModal();
         }
@@ -818,7 +816,7 @@
 
         document.getElementById('editBudgetForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (!currentUser.isAdmin) return;
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
 
             const newShare = parseFloat(document.getElementById('newShareInput').value);
             if (isNaN(newShare)) {
@@ -839,7 +837,7 @@
 
         // Admin Edit Members Limit Handlers
         function openEditMembersModal() {
-            if (!currentUser.isAdmin) return;
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
             document.getElementById('newMaxMembersInput').value = currentTrip.maxMembers;
             toggleEditMembersModal();
         }
@@ -850,7 +848,7 @@
 
         document.getElementById('editMembersForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (!currentUser.isAdmin) return;
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
 
             const newMax = parseInt(document.getElementById('newMaxMembersInput').value);
             if (isNaN(newMax) || newMax < currentTrip.members.length) {
@@ -869,7 +867,7 @@
         // Admin Record Member Payment
         document.getElementById('adminPaymentForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (!currentUser.isAdmin) return;
+            if (!currentUser.isAdmin || currentTrip.isClosed) return;
 
             const memberName = document.getElementById('paymentMemberSelect').value;
             const amt = parseFloat(document.getElementById('paymentAmount').value);
@@ -894,6 +892,8 @@
         // Add Expense
         document.getElementById('expenseForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            if (currentTrip.isClosed) return;
+
             const spender = document.getElementById('spenderName').value.trim();
             const reason = document.getElementById('expenseReason').value.trim();
             const amount = parseFloat(document.getElementById('expenseAmount').value);
@@ -911,9 +911,30 @@
             this.reset();
         });
 
-        // Trigger Trip Settlement & Split-up calculation
+        // Delete Expense Handler (Admin only when active)
+        function deleteExpense(index) {
+            if (currentTrip.isClosed || !currentUser.isAdmin) return;
+            if (!confirm("Are you sure you want to delete this expense?")) return;
+
+            currentTrip.expenses.splice(index, 1);
+            saveToStorage();
+            renderExpenses();
+            updateStats();
+            renderMembersList();
+            alert("Expense deleted successfully!");
+        }
+
+        // Trigger Trip Settlement & Split-up calculation (Based on Actual Total Spent divided by total members)
         function triggerTripSettlement() {
-            if (!currentUser.isAdmin) return;
+            if (currentUser.isAdmin && !currentTrip.isClosed) {
+                if (!confirm("Are you sure you want to end this trip? No further expenses can be added after locking.")) {
+                    return;
+                }
+                currentTrip.isClosed = true;
+                saveToStorage();
+                enterDashboard();
+                renderRecentTrips();
+            }
 
             const totalSpent = currentTrip.expenses.reduce((acc, curr) => acc + curr.amount, 0);
             const totalMembers = currentTrip.members.length;
@@ -924,10 +945,10 @@
 
             let summaryHtml = `
                 <div class="bg-gray-700 p-3 rounded-lg text-xs space-y-1 mb-4 text-cyan-300 font-mono">
-                    <p>${currentLang === 'ta' ? 'மொத்த பட்ஜெட் (Auto):' : 'Total Budget (Auto):'} ₹${currentTrip.budget}</p>
-                    <p>${currentLang === 'ta' ? 'உண்மையான மொத்த செலவு:' : 'Total Actual Spent:'} ₹${totalSpent}</p>
-                    <p>${currentLang === 'ta' ? 'உறுப்பினர்கள் எண்ணிக்கை:' : 'Total Members:'} ${totalMembers}</p>
-                    <p>${currentLang === 'ta' ? 'சரியான நபர் பங்கு (Actual Share / Person):' : 'Actual Share / Person:'} ₹${actualSharePerPerson.toFixed(2)}</p>
+                    <p>Total Budget (Auto): ₹${currentTrip.budget}</p>
+                    <p>Total Actual Spent: ₹${totalSpent}</p>
+                    <p>Total Members: ${totalMembers}</p>
+                    <p>Actual Share / Person: ₹${actualSharePerPerson.toFixed(2)}</p>
                 </div>
             `;
 
@@ -938,18 +959,18 @@
 
                 let statusBadge = "";
                 if (diff > 0) {
-                    statusBadge = `<span class="text-emerald-400 font-bold">${currentLang === 'ta' ? '🎉 இவருக்கு அட்மின் தர வேண்டியது (Refund):' : '🎉 Refund to get back:'} ₹${diff.toFixed(2)}</span>`;
+                    statusBadge = `<span class="text-emerald-400 font-bold">🎉 Refund to get back: ₹${diff.toFixed(2)}</span>`;
                 } else if (diff < 0) {
-                    statusBadge = `<span class="text-rose-400 font-bold">${currentLang === 'ta' ? '⚠️ இவர் இன்னும் அட்மினுக்குத் தர வேண்டியது (Balance Due):' : '⚠️ Balance Due to pay:'} ₹${Math.abs(diff).toFixed(2)}</span>`;
+                    statusBadge = `<span class="text-rose-400 font-bold">⚠️ Balance Due to pay: ₹${Math.abs(diff).toFixed(2)}</span>`;
                 } else {
-                    statusBadge = `<span class="text-cyan-300 font-bold">${currentLang === 'ta' ? '✅ கணக்கு கரெக்ட் (Settled Full)' : '✅ Settled Full'}</span>`;
+                    statusBadge = `<span class="text-cyan-300 font-bold">✅ Settled Full</span>`;
                 }
 
                 membersHtml += `
                     <div class="bg-gray-750 border border-gray-700 p-3 rounded-xl space-y-1 text-xs">
                         <div class="flex justify-between font-bold text-white text-sm">
                             <span>${m.name} (${m.role})</span>
-                            <span>${currentLang === 'ta' ? 'கொடுத்தது:' : 'Paid:'} ₹${paid}</span>
+                            <span>Paid: ₹${paid}</span>
                         </div>
                         <div>${statusBadge}</div>
                     </div>
@@ -964,7 +985,7 @@
             document.getElementById('settlementModal').classList.toggle('hidden');
         }
 
-        // Render Members List with Click-to-Call Phone Numbers
+        // Render Members List using actual spent divided by members
         function renderMembersList() {
             const listContainer = document.getElementById('membersListContainer');
             listContainer.innerHTML = "";
@@ -981,12 +1002,12 @@
                 const balance = actualSharePerPerson - paid;
                 
                 let balanceText = balance > 0 
-                    ? `<span class="text-rose-400 font-semibold">${currentLang === 'ta' ? 'பாக்கி தர வேண்டியது:' : 'Due:'} ₹${balance.toFixed(2)}</span>` 
-                    : (balance < 0 ? `<span class="text-emerald-400 font-semibold">${currentLang === 'ta' ? 'பெற வேண்டியது (Refund):' : 'Refund:'} ₹${Math.abs(balance).toFixed(2)}</span>` : `<span class="text-emerald-400 font-semibold">செட்டில்டு ✅</span>`);
+                    ? `<span class="text-rose-400 font-semibold">Due: ₹${balance.toFixed(2)}</span>` 
+                    : (balance < 0 ? `<span class="text-emerald-400 font-semibold">Refund: ₹${Math.abs(balance).toFixed(2)}</span>` : `<span class="text-emerald-400 font-semibold">Settled ✅</span>`);
 
                 let transferBtn = "";
-                if (currentUser.isAdmin && member.role !== "Admin") {
-                    transferBtn = `<button onclick="makeAdmin('${member.name}', '${member.phone}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-0.5 rounded">${currentLang === 'ta' ? 'Admin மாற்று' : 'Make Admin'}</button>`;
+                if (currentUser.isAdmin && !currentTrip.isClosed && member.role !== "Admin") {
+                    transferBtn = `<button onclick="makeAdmin('${member.name}', '${member.phone}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-0.5 rounded">Make Admin</button>`;
                 }
 
                 const phoneLink = member.phone ? `<a href="tel:${member.phone}" class="text-cyan-400 hover:underline font-mono">📞 ${member.phone}</a>` : `<span class="text-gray-400 font-mono">Admin</span>`;
@@ -1003,7 +1024,7 @@
                         <span>${phoneLink}</span>
                     </div>
                     <div class="flex justify-between items-center text-gray-300 border-t border-gray-600 pt-1.5">
-                        <span>${currentLang === 'ta' ? 'கொடுத்தது:' : 'Paid:'} <strong class="text-cyan-300">₹${paid}</strong></span>
+                        <span>Paid: <strong class="text-cyan-300">₹${paid}</strong></span>
                         ${balanceText}
                     </div>
                 `;
@@ -1012,7 +1033,7 @@
         }
 
         function makeAdmin(memberName, memberPhone) {
-            if(!currentUser.isAdmin) return;
+            if(!currentUser.isAdmin || currentTrip.isClosed) return;
             if(!confirm(`Make ${memberName} the new admin?`)) return;
 
             currentTrip.members.forEach(m => {
@@ -1071,19 +1092,28 @@
         function renderExpenses() {
             const tbody = document.getElementById('expenseTableBody');
             if (currentTrip.expenses.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-gray-500">${currentLang === 'ta' ? 'இதுவரை செலவுகள் எதுவும் சேர்க்கப்படவில்லை.' : 'No expenses added yet.'}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-gray-500">No expenses added yet.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = "";
-            currentTrip.expenses.forEach(item => {
+            currentTrip.expenses.forEach((item, index) => {
                 const row = document.createElement('tr');
                 row.className = "hover:bg-gray-750 transition";
+                
+                let deleteActionHtml = "";
+                if (currentUser.isAdmin && !currentTrip.isClosed) {
+                    deleteActionHtml = `<td class="py-3 px-4 text-center"><button onclick="deleteExpense(${index})" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-2 py-1 rounded transition" title="Delete Expense">🗑️</button></td>`;
+                } else if (!currentTrip.isClosed) {
+                    deleteActionHtml = `<td class="py-3 px-4 text-center text-gray-500">-</td>`;
+                }
+
                 row.innerHTML = `
                     <td class="py-3 px-4 font-medium text-white">${item.spender}</td>
                     <td class="py-3 px-4 text-gray-300">${item.reason}</td>
                     <td class="py-3 px-4 text-xs text-cyan-300 font-mono">${item.dateTime}</td>
                     <td class="py-3 px-4 text-right font-semibold text-rose-400">₹${item.amount}</td>
+                    ${deleteActionHtml}
                 `;
                 tbody.appendChild(row);
             });
@@ -1100,18 +1130,19 @@
             const balanceElem = document.getElementById('statBalance');
             const balanceLabel = document.getElementById('statBalanceLabel');
 
-            if (totalSpent > currentTrip.budget) {
+            if (totalSpent > currentTrip.budget && !currentTrip.isClosed) {
                 warningBanner.classList.remove('hidden');
-                balanceElem.innerText = `-₹${Math.abs(balance)}`;
-                balanceElem.className = "text-xl font-bold text-rose-500 mt-1";
-                balanceLabel.innerText = currentLang === 'ta' ? "பட்ஜெட் பற்றாக்குறை" : "Over Budget";
-                balanceLabel.className = "text-xs text-rose-400 font-semibold";
             } else {
                 warningBanner.classList.add('hidden');
-                balanceElem.innerText = `₹${balance}`;
+            }
+
+            balanceElem.innerText = `₹${balance}`;
+            if (balance < 0) {
+                balanceElem.className = "text-xl font-bold text-rose-500 mt-1";
+                balanceLabel.innerText = "Over Budget";
+            } else {
                 balanceElem.className = "text-xl font-bold text-emerald-400 mt-1";
-                balanceLabel.innerText = currentLang === 'ta' ? "மீதி தொகை" : "Remaining Balance";
-                balanceLabel.className = "text-xs text-gray-400";
+                balanceLabel.innerText = "Remaining Balance";
             }
         }
     </script>
